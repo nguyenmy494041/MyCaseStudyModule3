@@ -5,9 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TrangWebBanQuatDieuHoa.Models;
+using TrangWebBanQuatDieuHoa.Repositories;
+using TrangWebBanQuatDieuHoa.Repositories.Impl;
+using TrangWebBanQuatDieuHoa.Services;
+using TrangWebBanQuatDieuHoa.Services.Impl;
 
 namespace TrangWebBanQuatDieuHoa
 {
@@ -24,6 +30,11 @@ namespace TrangWebBanQuatDieuHoa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("EmployeeDbConnection")));
+            services.AddControllersWithViews();
+            services.AddScoped<IProductRepository, ProductRepositoryImpl>();
+            services.AddScoped<IProductService, ProductServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
