@@ -2,44 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TrangWebBanQuatDieuHoa.Models;
 using TrangWebBanQuatDieuHoa.Models.Products;
-using TrangWebBanQuatDieuHoa.Services;
-using TrangWebBanQuatDieuHoa.Services.Impl;
+using TrangWebBanQuatDieuHoa.Repositories;
 
 namespace TrangWebBanQuatDieuHoa.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly AppDbContext context;
-        private readonly IWebHostEnvironment webHostEnvironment;
-        private readonly IProductService service;
+        private readonly IProductRepository productRepository;
 
-        public ProductController(AppDbContext context, IWebHostEnvironment webHostEnvironment, IProductService service)
+        public ProductController(IProductRepository productRepository  )
         {
-            this.context = context;
-            this.webHostEnvironment = webHostEnvironment;
-            this.service = service;
+            this.productRepository = productRepository;
+        }
+        public IActionResult Index()
+        {
+            return View();
         }
 
-        //phần viêt thêm
         [HttpGet]
-        public IActionResult CreateProduct()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreateProduct(CreateProduct model, IFormFile[] ImageFiles)
+        public IActionResult Create(CreateProduct model, IFormFile[] ImageFiles)
         {
             if (ModelState.IsValid)
             {
-                service.TaoMoiSanPham( model,ImageFiles);
-               return RedirectToAction("Index", "Home");
+                var result = productRepository.Create(model, ImageFiles);
+                if (result > 0)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                
             }
+            ViewData["Message"] = "Sản phẩm đã tồn tại";
             return View();
         }
     }

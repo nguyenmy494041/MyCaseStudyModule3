@@ -14,7 +14,7 @@ namespace TrangWebBanQuatDieuHoa.Models.Products
         [Required, MaxLength(100)]
         [Display(Name = "Tên Hãng")]
         public string BrandName { get; set; }
-
+        
         public ICollection<Product> Products { get; set; }
     }
 }

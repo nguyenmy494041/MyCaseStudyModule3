@@ -9,7 +9,7 @@
     <article class="card-body">
         <h1 class="card-title mt-3 text-center" style="color:red">Thêm mới sản phẩm</h1>
         <hr /> <br />
-        <form asp-controller="Product" asp-action="CreateProduct" method="post" class=" mt-6" autocomplete="off" enctype="multipart/form-data">
+        <form asp-controller="Product" asp-action="Create" method="post" class=" mt-6" autocomplete="off" enctype="multipart/form-data">
 
 
             <div class="row">
@@ -34,6 +34,7 @@
                             <input class="form-control" asp-for="ProductCode">
                         </div>
                         <span asp-validation-for=" ProductCode" class=" text-danger"></span>
+                        <em class=" text-danger"> @ViewData["Message"]</em>
                     </div>
                 </div>
 

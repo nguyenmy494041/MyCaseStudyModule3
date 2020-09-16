@@ -1,0 +1,22 @@
+﻿@model Brand
+
+@{
+    ViewBag.Title = "Thêm mới thương hiệu sản phẩm";
+}
+<form asp-controller="Brand" asp-action="Create" method="post" class=" bg-light rounded container">
+    <h3>Thêm mới thương hiệu sản phẩm</h3>
+    <div class=" row form-group col">
+        <div style="width: 22.5%">
+            <label asp-for="BrandName"></label>
+        </div>
+        <div class=" col-4">
+            <input asp-for=" BrandName" class=" form-control text-uppercase" />
+            <span asp-validation-for=" BrandName" class=" text-danger"></span>
+            <h3>@ViewData["Message"]</h3>
+
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center"><button class="btn btn-info " type="submit">Thêm mới</button></div>
+    <a asp-controller="Brand" asp-action="Index">Hủy</a>
+</form>

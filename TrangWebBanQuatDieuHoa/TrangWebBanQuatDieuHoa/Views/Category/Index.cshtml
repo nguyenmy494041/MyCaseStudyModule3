@@ -1,0 +1,74 @@
+﻿@model List<Category>
+
+@{
+    ViewBag.Title = "Các loại sản phẩm";
+}
+<br />
+<h4>Danh sách các loại sản phẩm có trong cửa hàng</h4>
+<br />
+<div class=" col-10 container border bg-light">
+    <a asp-controller="Category" asp-action="Create" class=" btn btn-info">Thêm mới</a>
+    <br /><br />
+    <table id="dataTable" class=" table table-bordered table-hover mt-3">
+        <thead class=" thead-light">
+            <tr>
+                <th>Mã loại</th>
+                <th>Loại sản phẩm</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CategoryId</td>
+                    <td>@item.CategoryName</td>
+                    <td>
+                        <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.CategoryId"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#@item.CategoryName">
+                            Delete
+                        </button>
+                        <div class="modal" id="@item.CategoryName">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header ">
+                                        <h2 class="modal-title" style="margin: auto;color: red">Xóa thương hiệu</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6> Are you sure you want to delete Role "@item.CategoryName" ?</h6>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-danger">Yes</a>
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+
+
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').dataTable(
+                {
+                    "columnDefs": [
+                        {
+                            "targets": 2,
+                            "orderable": false
+                        },
+                    ]
+                }
+            );
+        });
+    </script>
+}
