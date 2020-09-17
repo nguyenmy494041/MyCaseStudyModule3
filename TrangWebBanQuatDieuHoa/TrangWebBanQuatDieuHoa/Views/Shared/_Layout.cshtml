@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - CuaHangQuatNuoc</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
-    <link href="~/lib/datatable/css/dataTables.bootstrap4.css" rel="stylesheet" />    
+    <link href="~/lib/datatable/css/dataTables.bootstrap4.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -24,31 +24,33 @@
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" asp-controller="Product" asp-action="Create">Link</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           Quản lý
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" asp-controller="Brand" asp-action="Index">Thương hiệu</a>
-                            <a class="dropdown-item" asp-controller="Category" asp-action="Index">Loại sản phẩm</a>
+                    <li class="nav-item">
 
-                            @*thanh sổ xuonngs*@
+                        <a class="nav-link" asp-controller="Brand" asp-action="Index">Quản lý <span class="sr-only">(current)</span></a>
+                        @*<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               Quản lý
+                            </a>*@
+                        <!--<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-controller="Brand" asp-action="Index">Thương hiệu</a>
+                        <a class="dropdown-item" asp-controller="Category" asp-action="Index">Loại sản phẩm</a>-->
+                        @*thanh sổ xuonngs*@
 
-                            <a class="nav-link dropdown-toggle" href="#" id="navbaraDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!--<a class="nav-link dropdown-toggle" href="#" id="navbaraDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                Sản phẩm
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbaraDropdown">
                                 <a class="dropdown-item" asp-controller="Product" asp-action="Create">Thêm mới</a>
+                                <a class="dropdown-item" asp-controller="Brand" asp-action="Index2">Thêm mới</a>
                             </div>
 
 
 
-                           
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+                        </div>-->
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -80,7 +82,7 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/font-awesome/js/all.js"></script>
     <script src="~/lib/datatablenet/jquery.dataTables.js"></script>
-  
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

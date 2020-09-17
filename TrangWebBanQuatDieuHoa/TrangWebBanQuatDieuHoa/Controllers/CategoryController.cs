@@ -52,9 +52,18 @@ namespace TrangWebBanQuatDieuHoa.Controllers
             var result = categoryRepository.Edit(category);
             if (result > 0)
             {
-                return RedirectToAction("Index", "Brand");
+                return RedirectToAction("Index", "Category");
             }
             ViewData["Message"] = "Loại sản phẩm đã tồn tại";
+            return View();
+        }
+        public IActionResult Delete(int id)
+        {
+            var result = categoryRepository.Delete(id);
+            if (result > 0)
+            {
+                return RedirectToAction("Index", "Category");
+            }
             return View();
         }
 

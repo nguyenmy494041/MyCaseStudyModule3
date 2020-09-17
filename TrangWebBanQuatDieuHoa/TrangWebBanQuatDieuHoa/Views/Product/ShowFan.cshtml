@@ -1,0 +1,79 @@
+﻿@model List<Product>
+@{
+    ViewBag.Title = "Danh sách quạt điều hòa";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+<br />
+<table id="dataTable" class=" table table-bordered table-hover mt-3">
+    <thead class=" thead-light">
+        <tr>
+            <th>STT</th>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm </th>
+            <th>Giá sản phẩm</th>
+            <th>Công suất</th>
+            <th>Chức năng </th>
+            <th>Thao tác </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+
+        <tr>
+            <td>@item.ProductId</td>
+            <td>@item.ProductCode</td>
+            <td>@item.ProductName</td>
+            <td>@item.ProductPrice</td>
+            <td>@item.Wattage W</td>
+            <td>@item.Specification.Dynamic</td>
+            <td>
+                <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#@item.ProductCode">
+                    Delete
+                </button>
+                <div class="modal" id="@item.ProductCode">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header ">
+                                <h2 class="modal-title" style="margin: auto;color: red">Xóa thương hiệu</h2>
+                            </div>
+                            <div class="modal-body">
+                                <h6> Are you sure you want to delete Role "@item.ProductName" ?</h6>
+                            </div>
+                            <div class="modal-footer">
+                                <a asp-controller="Brand" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-danger">Yes</a>
+                                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+        </tr>
+
+
+        }
+
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').dataTable(
+                //{
+                //    "columnDefs": [
+                //        {
+                //            "targets": 0,
+                //            "orderable": false
+                //        },
+
+                //    ]
+                //}
+            );
+        });
+    </script>
+}

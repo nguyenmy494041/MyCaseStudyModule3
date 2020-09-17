@@ -43,5 +43,28 @@ namespace TrangWebBanQuatDieuHoa.Controllers
             ViewData["Message"] = "Sản phẩm đã tồn tại";
             return View();
         }
+        public IActionResult ShowFan()
+        {
+            var fans = productRepository.GetAllByCategory(1).ToList();
+            return View(fans);
+        }
+        public IActionResult ShowFilter()
+        {
+            var filters = productRepository.GetAllByCategory(2).ToList();
+            return View(filters);
+        }
+        public IActionResult ShowBottle()
+        {
+            var filters = productRepository.GetAllByCategory(3).ToList();
+            return View(filters);
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            //    var pro = 
+            var products = productRepository.GetAllByCategory(null).ToList();
+            var edit = products.FirstOrDefault(e => e.ProductId== id);
+            return View(edit);
+        }
     }
 }

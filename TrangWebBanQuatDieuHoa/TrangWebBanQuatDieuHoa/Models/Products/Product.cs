@@ -64,7 +64,7 @@ namespace TrangWebBanQuatDieuHoa.Models.Products
         [Display(Name = "Mô tả sản phẩm"), MaxLength(50000)]
         [Required(ErrorMessage = "Chưa mô tả về sản phẩm")]
         public string Description { get; set; }
-
+        //public int SpecificationId { get; set; }
         public Specification Specification { get; set; }
 
         [Required]

@@ -9,7 +9,13 @@ namespace TrangWebBanQuatDieuHoa.Repositories
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> GetAllFan();
+
+        IEnumerable<Product> GetAllByCategory(int? categoryId);
         int Create(CreateProduct createProduct, IFormFile[] ImageFiles);
+        int Edit(CreateProduct editproduct, IFormFile[] ImageFiles);
+        int Delete(int id);
+        CreateProduct ConvertToCreateProduct(int id);
+      
+
     }
 }

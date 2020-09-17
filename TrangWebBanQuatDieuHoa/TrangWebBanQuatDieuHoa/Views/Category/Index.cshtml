@@ -2,11 +2,13 @@
 
 @{
     ViewBag.Title = "Các loại sản phẩm";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
 }
 <br />
-<h4>Danh sách các loại sản phẩm có trong cửa hàng</h4>
+<h4 class=" text-center">Danh sách các loại sản phẩm có trong cửa hàng</h4>
 <br />
-<div class=" col-10 container border bg-light">
+<div class=" col-11 container bg-light">
     <a asp-controller="Category" asp-action="Create" class=" btn btn-info">Thêm mới</a>
     <br /><br />
     <table id="dataTable" class=" table table-bordered table-hover mt-3">
@@ -26,10 +28,10 @@
                     <td>@item.CategoryName</td>
                     <td>
                         <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.CategoryId"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#@item.CategoryName">
+                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#category-@item.CategoryId">
                             Delete
                         </button>
-                        <div class="modal" id="@item.CategoryName">
+                        <div class="modal" id="category-@item.CategoryId">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header ">

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,11 +23,22 @@ namespace TrangWebBanQuatDieuHoa.Repositories
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public IEnumerable<Product> GetAllFan()
+
+
+        public IEnumerable<Product> GetAllByCategory(int? categoryId)
         {
-            var fan = context.Categories.FirstOrDefault(e => e.CategoryName == "Quạt điều hòa").CategoryId;
-            return context.Products.Where(e => e.CategoryId == fan).ToList();
+
+            List<Product> products = context.Products.Include(e => e.Specification)
+              .Include(e => e.Images).Include(e => e.Category).ToList();
+            var query = products.AsQueryable();
+            if(categoryId!=null)
+            {
+                query = query.Where(e => e.CategoryId == categoryId);
+            }
+            return query.ToList();
         }
+
+
 
         public int Create(CreateProduct createProduct, IFormFile[] ImageFiles)
         {
@@ -105,6 +117,92 @@ namespace TrangWebBanQuatDieuHoa.Repositories
             return -1;
         }
 
-       
+        //public int Edit(CreateProduct editproduct, IFormFile[] ImageFiles)
+        //{
+        //    var exit = context.Products.Find(editproduct.ProductId);
+        //    if (exit != null)
+        //    {
+        //        exit.ProductName = editproduct.ProductName;
+        //        exit.ProductPrice = editproduct.ProductPrice;
+        //        exit.Size = editproduct.Size;
+        //        exit.Weight = editproduct.Weight;
+        //        exit.Wattage = editproduct.Wattage;
+        //        exit.TankCapacity = editproduct.TankCapacity;
+        //        exit.Utilities = editproduct.Utilities;
+        //        exit.Manufactures = editproduct.Manufactures;
+        //        exit.MadeIn = editproduct.MadeIn;
+        //        exit.BrandId = editproduct.BrandId;
+        //        exit.Year = editproduct.Year;
+        //        exit.Description = editproduct.Description;
+        //        var spec = new Specification()
+        //        {
+        //            Dynamic = editproduct.Dynamic,
+        //            WindSpeed = editproduct.WindSpeed,
+        //            WindFlow = editproduct.WindFlow,
+        //            WindMode = editproduct.WindMode,
+        //            Control = editproduct.Control,
+        //            CollingRange = editproduct.CollingRange,
+        //            FanCageType = editproduct.FanCageType,
+        //            Noiselevel = editproduct.Noiselevel,
+        //            WaterConsumption = editproduct.WaterConsumption,
+        //            MachineModel = editproduct.MachineModel,
+        //            FilterTechnology = editproduct.FilterTechnology,
+        //            FilterCapacity = editproduct.FilterCapacity,
+        //            Pumping = editproduct.Pumping,
+        //            Safemode = editproduct.Safemode,
+        //            Temperature = editproduct.Temperature,
+        //            WaterPressure = editproduct.WaterPressure,
+        //            WarmUpTime = editproduct.WarmUpTime,
+        //            MaxTemperature = editproduct.MaxTemperature,
+        //            ProductId = exit.ProductId
+        //        };
+        //        exit.Specification = spec;
+        //        List<Image> images = new List<Image>();
+        //        if (editproduct.ImageFiles != null)
+        //        {
+        //            var iamge = editproduct.ImageFiles.ToList();
+        //            string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+
+        //            for (int i = 0; i < iamge.Count; i++)
+        //            {
+        //                string fileName = $"{Guid.NewGuid()}_{iamge[i].FileName}";
+        //                var filePath = Path.Combine(uploadFolder, fileName);
+        //                using (var fs = new FileStream(filePath, FileMode.Create))
+        //                {
+        //                    iamge[i].CopyTo(fs);
+        //                }
+        //                var anh = new Image()
+        //                {
+        //                    ProductId = exit.ProductId,
+        //                    ImageName = fileName
+        //                };
+        //                images.Add(anh);
+
+        //            }
+        //            exit.Images = images;
+        //            return context.SaveChanges();
+        //        }
+
+        //    }
+        //    return -1;
+        //}
+
+        public int Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Edit(CreateProduct editproduct, IFormFile[] ImageFiles)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CreateProduct ConvertToCreateProduct(int id)
+        {
+            var pro = context.Products.Find(id);
+            var spec = context.Specifications.FirstOrDefault(q => q.ProductId == pro.ProductId);
+            var image = context.Images.Where(q => q.ProductId == pro.ProductId).ToList();
+            return null;
+        }
     }
 }
