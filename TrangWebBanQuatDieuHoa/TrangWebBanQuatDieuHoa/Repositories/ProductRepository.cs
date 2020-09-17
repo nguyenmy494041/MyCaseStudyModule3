@@ -38,8 +38,6 @@ namespace TrangWebBanQuatDieuHoa.Repositories
             return query.ToList();
         }
 
-
-
         public int Create(CreateProduct createProduct, IFormFile[] ImageFiles)
         {
             var exit = context.Products.FirstOrDefault(e => e.ProductCode == createProduct.ProductCode && e.CategoryId == createProduct.CategoryId);
@@ -117,85 +115,97 @@ namespace TrangWebBanQuatDieuHoa.Repositories
             return -1;
         }
 
-        //public int Edit(CreateProduct editproduct, IFormFile[] ImageFiles)
-        //{
-        //    var exit = context.Products.Find(editproduct.ProductId);
-        //    if (exit != null)
-        //    {
-        //        exit.ProductName = editproduct.ProductName;
-        //        exit.ProductPrice = editproduct.ProductPrice;
-        //        exit.Size = editproduct.Size;
-        //        exit.Weight = editproduct.Weight;
-        //        exit.Wattage = editproduct.Wattage;
-        //        exit.TankCapacity = editproduct.TankCapacity;
-        //        exit.Utilities = editproduct.Utilities;
-        //        exit.Manufactures = editproduct.Manufactures;
-        //        exit.MadeIn = editproduct.MadeIn;
-        //        exit.BrandId = editproduct.BrandId;
-        //        exit.Year = editproduct.Year;
-        //        exit.Description = editproduct.Description;
-        //        var spec = new Specification()
-        //        {
-        //            Dynamic = editproduct.Dynamic,
-        //            WindSpeed = editproduct.WindSpeed,
-        //            WindFlow = editproduct.WindFlow,
-        //            WindMode = editproduct.WindMode,
-        //            Control = editproduct.Control,
-        //            CollingRange = editproduct.CollingRange,
-        //            FanCageType = editproduct.FanCageType,
-        //            Noiselevel = editproduct.Noiselevel,
-        //            WaterConsumption = editproduct.WaterConsumption,
-        //            MachineModel = editproduct.MachineModel,
-        //            FilterTechnology = editproduct.FilterTechnology,
-        //            FilterCapacity = editproduct.FilterCapacity,
-        //            Pumping = editproduct.Pumping,
-        //            Safemode = editproduct.Safemode,
-        //            Temperature = editproduct.Temperature,
-        //            WaterPressure = editproduct.WaterPressure,
-        //            WarmUpTime = editproduct.WarmUpTime,
-        //            MaxTemperature = editproduct.MaxTemperature,
-        //            ProductId = exit.ProductId
-        //        };
-        //        exit.Specification = spec;
-        //        List<Image> images = new List<Image>();
-        //        if (editproduct.ImageFiles != null)
-        //        {
-        //            var iamge = editproduct.ImageFiles.ToList();
-        //            string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
 
-        //            for (int i = 0; i < iamge.Count; i++)
-        //            {
-        //                string fileName = $"{Guid.NewGuid()}_{iamge[i].FileName}";
-        //                var filePath = Path.Combine(uploadFolder, fileName);
-        //                using (var fs = new FileStream(filePath, FileMode.Create))
-        //                {
-        //                    iamge[i].CopyTo(fs);
-        //                }
-        //                var anh = new Image()
-        //                {
-        //                    ProductId = exit.ProductId,
-        //                    ImageName = fileName
-        //                };
-        //                images.Add(anh);
 
-        //            }
-        //            exit.Images = images;
-        //            return context.SaveChanges();
-        //        }
 
-        //    }
-        //    return -1;
-        //}
 
-        public int Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public int Edit(CreateProduct editproduct, IFormFile[] ImageFiles)
         {
-            throw new NotImplementedException();
+            var exit = context.Products.Find(editproduct.ProductId);
+            if (exit != null)
+            {
+                exit.ProductName = editproduct.ProductName;
+                exit.ProductPrice = editproduct.ProductPrice;
+                exit.Size = editproduct.Size;
+                exit.Weight = editproduct.Weight;
+                exit.Wattage = editproduct.Wattage;
+                exit.TankCapacity = editproduct.TankCapacity;
+                exit.Utilities = editproduct.Utilities;
+                exit.Manufactures = editproduct.Manufactures;
+                exit.MadeIn = editproduct.MadeIn;
+                //exit.BrandId = editproduct.BrandId;
+                exit.Year = editproduct.Year;
+                exit.Description = editproduct.Description;
+                var spec = context.Specifications.FirstOrDefault(p => p.ProductId == exit.ProductId);
+
+                spec.Dynamic = editproduct.Dynamic;
+                spec.WindSpeed = editproduct.WindSpeed;
+                spec.WindFlow = editproduct.WindFlow;
+                spec.WindMode = editproduct.WindMode;
+                spec.Control = editproduct.Control;
+                spec.CollingRange = editproduct.CollingRange;
+                spec.FanCageType = editproduct.FanCageType;
+                spec.Noiselevel = editproduct.Noiselevel;
+                spec.WaterConsumption = editproduct.WaterConsumption;
+                spec.MachineModel = editproduct.MachineModel;
+                spec.FilterTechnology = editproduct.FilterTechnology;
+                spec.FilterCapacity = editproduct.FilterCapacity;
+                spec.Pumping = editproduct.Pumping;
+                spec.Safemode = editproduct.Safemode;
+                spec.Temperature = editproduct.Temperature;
+                spec.WaterPressure = editproduct.WaterPressure;
+                spec.WarmUpTime = editproduct.WarmUpTime;
+                spec.MaxTemperature = editproduct.MaxTemperature;               
+                
+              
+                List<Image> images = new List<Image>();
+                if (editproduct.ImageFiles != null)
+                {
+                    List<Image> imagesList = context.Images.ToList().FindAll(el => el.ProductId == exit.ProductId);
+                    context.RemoveRange(imagesList);
+                    context.SaveChangesAsync();
+
+                    var iamge = editproduct.ImageFiles.ToList();
+                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+
+                    for (int i = 0; i < iamge.Count; i++)
+                    {
+                        string fileName = $"{Guid.NewGuid()}_{iamge[i].FileName}";
+                        var filePath = Path.Combine(uploadFolder, fileName);
+                        using (var fs = new FileStream(filePath, FileMode.Create))
+                        {
+                            iamge[i].CopyTo(fs);
+                        }
+                        var anh = new Image()
+                        {
+                            ProductId = exit.ProductId,
+                            ImageName = fileName
+                        };
+                        context.Images.Add(anh);
+
+                    }
+                    //exit.Images = images;
+                  
+                }
+                return context.SaveChanges();
+            }
+            return -1;
         }
+
+        public int Delete(int id)
+        {
+            var delete = context.Products.FirstOrDefault(e => e.ProductId == id);
+            if (delete != null)
+            {
+                context.Products.Remove(delete);
+                return context.SaveChanges();
+            }
+            return -1;
+        }
+
+        
 
         public CreateProduct ConvertToCreateProduct(int id)
         {
@@ -204,5 +214,7 @@ namespace TrangWebBanQuatDieuHoa.Repositories
             var image = context.Images.Where(q => q.ProductId == pro.ProductId).ToList();
             return null;
         }
+
+       
     }
 }

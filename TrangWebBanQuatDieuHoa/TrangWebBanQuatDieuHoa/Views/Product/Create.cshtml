@@ -473,9 +473,9 @@
             </div>
 
 
-            <div class="form-group">
+            <div class="form-group"  >
                 <a style="margin:0px 20px" class=" btn btn-info float-lg-right" asp-controller="Product" asp-action="ShowSteamFan">Quay lại</a>
-                <button type="submit" class="btn btn-primary  float-lg-right"> Thêm mới</button>
+                <button type="submit" class="btn btn-primary  float-lg-right" onclick="return checkFunction()"> Thêm mới</button>
 
             </div>
 
@@ -485,24 +485,32 @@
                 <div class="input-group-prepend" style=" width:19.5%">
                     <label class="input-group-text" style=" width:100%">Chọn ảnh sản phẩm</label>
                 </div>
-                <input class="col" id="ImageFiles" name="ImageFiles" type="file" multiple />
-                <div id="image-holder"></div>
+                <input class="col" id="ImageFiles" name="ImageFiles" type="file" onchange="preview(this);" multiple="multiple"/><br />
+                <div id="previewImg"></div>
             </div>
 
         </form>
         <script>
-            function readURLWeekly(input) {
-                if (input.files)
-                    for (var i = 0; i < input.files.length; i++) {
-                        if (input.files[i]) {
-                            var reader = new FileReader();
-                            reader.onload = function (e) {
-                                $('.weeklyPreview').append('<img data-src="holder.js/140x140" src="' + e.target.result + '" class="offer-image img-polaroid"/>');
-                            },
-                                reader.readAsDataURL(input.files[i]);
+            window.preview = function (input) {
+                $('#previewImg').empty();
+                if (input.files && input.files[0]) {
+                    $(input.files).each(function (i, value) {
+                        var reader = new FileReader();
+                        reader.readAsDataURL(this);
+                        reader.onload = function (e) {
+                            $("#previewImg").append("<img style='width: 100px' id='p" + i + "' class='thumb'  onclick='xoa(" + i + ");' src='" + e.target.result + "'>");
                         }
-                    }
+                    });
+                }
+                //console.log(input.files);
             }
+
+            function xoa(i) {
+
+                $(`#p${i}`).remove();
+
+            }
+         
         </script>
     </article>
 </div>

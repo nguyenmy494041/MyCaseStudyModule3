@@ -70,5 +70,6 @@ namespace TrangWebBanQuatDieuHoa.Models.Products
         public int CategoryId { get; set; }
 
         public IEnumerable<IFormFile> ImageFiles { get; set; }
+        public ICollection<Image> images { get; set; }
     }
 }

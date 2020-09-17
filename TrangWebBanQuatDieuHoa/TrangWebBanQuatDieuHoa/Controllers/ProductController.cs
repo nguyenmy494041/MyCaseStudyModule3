@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Composition.Convention;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -60,11 +61,67 @@ namespace TrangWebBanQuatDieuHoa.Controllers
         }
         [HttpGet]
         public IActionResult Edit(int id)
-        {
-            //    var pro = 
+        {          
             var products = productRepository.GetAllByCategory(null).ToList();
             var edit = products.FirstOrDefault(e => e.ProductId== id);
-            return View(edit);
+            var createproduct = new CreateProduct()
+            {
+                ProductId = edit.ProductId,
+                ProductName = edit.ProductName,
+                CategoryId = edit.CategoryId,
+                ProductPrice = edit.ProductPrice,
+                Utilities = edit.Utilities,
+                Year = edit.Year,
+                Wattage = edit.Wattage,
+                WaterConsumption = edit.Specification.WaterConsumption,
+                WarmUpTime = edit.Specification.WarmUpTime,
+                WaterPressure = edit.Specification.WaterPressure,
+                Weight = edit.Weight,
+                WindFlow = edit.Specification.WindFlow,
+                WindMode = edit.Specification.WindMode,
+                WindSpeed = edit.Specification.WindSpeed,
+                Safemode = edit.Specification.Safemode,
+                Size = edit.Size,
+                CollingRange = edit.Specification.CollingRange,
+                Control = edit.Specification.Control,
+                Dynamic = edit.Specification.Dynamic,
+                Description = edit.Description,
+                FanCageType = edit.Specification.FanCageType,
+                FilterCapacity = edit.Specification.FilterCapacity,
+                FilterTechnology = edit.Specification.FilterTechnology,
+                MachineModel = edit.Specification.MachineModel,
+                MadeIn = edit.MadeIn,
+                Manufactures = edit.Manufactures,
+                MaxTemperature = edit.Specification.MaxTemperature,
+                Noiselevel = edit.Specification.Noiselevel,
+                NumberFilterCores = edit.Specification.NumberFilterCores,
+                Pumping = edit.Specification.Pumping,
+                TankCapacity = edit.TankCapacity,
+                Temperature = edit.Specification.Temperature,
+                images = edit.Images,
+                
+            };
+            return View(createproduct);
         }
+        [HttpPost]
+        public IActionResult Edit(CreateProduct editproduct, IFormFile[] ImageFiles)
+        {
+            var result = productRepository.Edit(editproduct, ImageFiles);
+            if (result > 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        public IActionResult Delete(int id)
+        {
+            var result = productRepository.Delete(id);
+            if (result > 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
     }
 }

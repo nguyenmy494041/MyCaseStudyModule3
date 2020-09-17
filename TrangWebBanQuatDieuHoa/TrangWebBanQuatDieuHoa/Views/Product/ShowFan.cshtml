@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
 <br />
+<h3 class=" text-center text-danger">Danh sách các sản phẩm quạt điều hòa</h3>
+<br />
 <table id="dataTable" class=" table table-bordered table-hover mt-3">
     <thead class=" thead-light">
         <tr>
@@ -14,7 +16,7 @@
             <th>Công suất</th>
             <th>Chức năng </th>
             <th>Thao tác </th>
-           
+
         </tr>
     </thead>
     <tbody>
@@ -22,37 +24,37 @@
         @foreach (var item in Model)
         {
 
-        <tr>
-            <td>@item.ProductId</td>
-            <td>@item.ProductCode</td>
-            <td>@item.ProductName</td>
-            <td>@item.ProductPrice</td>
-            <td>@item.Wattage W</td>
-            <td>@item.Specification.Dynamic</td>
-            <td>
-                <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#@item.ProductCode">
-                    Delete
-                </button>
-                <div class="modal" id="@item.ProductCode">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header ">
-                                <h2 class="modal-title" style="margin: auto;color: red">Xóa thương hiệu</h2>
-                            </div>
-                            <div class="modal-body">
-                                <h6> Are you sure you want to delete Role "@item.ProductName" ?</h6>
-                            </div>
-                            <div class="modal-footer">
-                                <a asp-controller="Brand" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-danger">Yes</a>
-                                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.ProductCode</td>
+                <td>@item.ProductName</td>
+                <td>@item.ProductPrice</td>
+                <td>@item.Wattage W</td>
+                <td>@item.Specification.Dynamic</td>
+                <td>
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#gia-@item.ProductPrice">
+                        Delete
+                    </button>
+                    <div class="modal" id="gia-@item.ProductPrice">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header ">
+                                    <h2 class="modal-title" style="margin: auto;color: red">Xóa thương hiệu</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <h6> Are you sure you want to delete Role "@item.ProductName" ?</h6>
+                                </div>
+                                <div class="modal-footer">
+                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-danger">Yes</a>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </td>
+                </td>
 
-        </tr>
+            </tr>
 
 
         }
@@ -67,7 +69,7 @@
                 //{
                 //    "columnDefs": [
                 //        {
-                //            "targets": 0,
+                //            "targets": 7,
                 //            "orderable": false
                 //        },
 
