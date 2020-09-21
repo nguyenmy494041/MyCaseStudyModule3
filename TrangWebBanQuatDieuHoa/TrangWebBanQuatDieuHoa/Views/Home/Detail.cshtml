@@ -1,0 +1,287 @@
+﻿@model Product
+@inject AppDbContext context
+
+@{
+    ViewBag.Title = $"{@Model.ProductName}";
+    var result = Model.Images.ToList();
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    const int fanid = 1;
+    const int filterid = 2;
+    const int bottleid = 3;
+    var listsanpham = ViewBag.products as List<Product>;
+    var lengthsp = (listsanpham.Count >= 4) ? 4 : listsanpham.Count;
+
+}
+
+@*@Html.Raw(Model.Description.Replace("\r\n", "<br />"))*@
+<em>Danh mục: @Model.Category.CategoryName</em>
+<div class=" row">
+    <h2 class=" mt-4 text-info ">@Model.ProductName &nbsp;&nbsp;</h2>
+    <span class="text-primary mt-4"> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+</div>
+<br />
+<div class=" row">
+
+    <div class=" col-sm-5 ">
+        <div id="carouselExampleInterval" class="carousel slide my-2 border border-secondary rounded bg-light" data-ride="carousel">
+            <div class="carousel-inner">
+
+                @for (int i = 0; i < result.Count; i++)
+                {
+                    @if (i == 0)
+                    {
+                        <div class="carousel-item active my-2 " data-interval="@(10000*(result.Count - i))">
+                            <img src="~/images/@result[i].ImageName" class="d-block w-100" alt="text">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item my-2" data-interval="@(10000*(result.Count - i))">
+                            <img src="~/images/@result[i].ImageName" class="d-block w-100" alt="text">
+                        </div>
+                    }
+
+                }
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="color:black"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div class="row">
+            <p class="btn btn-outline-info" style=" color: Highlight; margin:auto" data-toggle="modal" data-target="#exampleModal">
+                Xem thông <br />số kỹ thuật
+            </p>
+        </div>
+
+
+    </div>
+
+    @*<div class=" col-sm-1"></div>*@
+    <div class=" col-sm-4" style="line-height: 12px">
+        <div class=" bg-light mt-3 container">
+            <p class=" mt-3">
+                Giá sản phẩm: <b style=" color:red; font-size: 25px;">@String.Format(info, "{0:#,##0 đ}", Model.ProductPrice)</b>&nbsp;
+                <sup class=" btn btn-sm btn-warning" style="font-size:10px; height:22px;">Trả góp 0%</sup>
+            </p>
+            <p>Trạng thái: <b style=" color:green">CÒN HÀNG</b></p>
+            @if (DateTime.Now.Hour <= 12)
+            {
+                <p style=" color:green">Giao hàng <b> &nbsp;Từ 16h - 18h hôm nay (@DateTime.Now.ToString("dd-MM"))</b></p>
+            }
+            else
+            {
+                <p style=" color:green">Giao hàng <b> &nbsp;Từ 10h - 12h ngày mai (@DateTime.Now.AddDays(1).ToString("dd-MM"))</b></p>
+            }
+            <p style=" color:green">Miễn phí giao hàng</p><br />
+
+
+            <a style="line-height: 10px" class="btn btn-success btn-lg btn-block"><p><b>MUA NGAY</b><div style=" font-size:15px">Hàng chính hãng 100%</div></p></a>
+            <a style="line-height: 10px" class="btn btn-info btn-lg btn-block"><p><b>MUA TRẢ GÓP 0%</b><div style=" font-size:15px">Thủ tục đơn giản</div></p></a>
+            <br /><b>Gói trả góp 0% phổ biến nhất</b>
+
+            <ul style="line-height: 25px">
+                <li>Góp <b>@String.Format(info, "{0:#,##0 đ}", Math.Round((Model.ProductPrice * 0.7 * 1.01 / 6) / 1000, 0) * 1000)</b>/tháng trong <b>6</b> tháng </li>
+                <li>Trả trước <b>@String.Format(info, "{0:#,##0 đ}", Math.Round((Model.ProductPrice * 0.3) / 1000, 0) * 1000)</b>(30%) </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="col-sm-3">
+
+
+        <ul class="list-group border border-secondary rounded text-success">
+            <li class="list-group-item"> <div style="text-align:center"><b>MUA NHƯ VUA - CHĂM SÓC NHƯ VIP</b></div></li>
+            <li class="list-group-item"> <div>Lỗi là đổi mới trong <b>1 tháng</b> tận nhà.</div></li>
+            <li class="list-group-item"><div>Bảo hành cực dễ chỉ cần <b>số điện thoại</b></div></li>
+            <li class="list-group-item"><div>Bảo hành <b>chính hãng thân máy 2 năm</b></div></li>
+            <li class="list-group-item"><div>Giao hàng miện phí và nhanh chóng</div></li>
+            <li class="list-group-item"> <div>Bảo hành Động cơ: 2 năm chính hãng</div></li>
+        </ul>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin chi tiết @Model.ProductName</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <table class="table table-striped">
+
+                    <tbody>
+                        <tr>
+                            <td><i>Đặc tính sản phẩm</i></td>
+                        </tr>
+                        <tr>
+                            <td><b>Công suất</b>: @Model.Wattage W</td>
+                        </tr>
+                        @if (Model.CategoryId == fanid)
+                        {
+                            <tr>
+                                <td><b>Chức năng</b>: @Model.Specification.Dynamic</td>
+                            </tr>
+                            <tr>
+                                <td><b>Tốc độ gió</b>: @Model.Specification.WindSpeed</td>
+                            </tr>
+                            <tr>
+                                <td><b>Chế độ gió</b>: @Model.Specification.WindMode</td>
+                            </tr>
+                            <tr>
+                                <td><b>điều khiển</b>: @Model.Specification.Control</td>
+                            </tr>
+                            <tr>
+                                <td><b>Phạm vi làm mát</b>: @Model.Specification.CollingRange</td>
+                            </tr>
+                            <tr>
+                                <td><b>Độ ồn</b>: @Model.Specification.Noiselevel</td>
+                            </tr>
+                            <tr>
+                                <td><b>Lưu lượng gió</b>: @Model.Specification.WindFlow m<sup>3</sup>/h</td>
+                            </tr>
+                            <tr>
+                                <td><b>Loại lồng quạt</b>: @Model.Specification.FanCageType</td>
+                            </tr>
+                        }
+                        @if (Model.CategoryId == filterid)
+                        {
+                            <tr>
+                                <td><b>Kiểu máy</b>: @Model.Specification.MachineModel</td>
+                            </tr>
+                            <tr>
+                                <td><b>Công nghệ lọc</b>: @Model.Specification.FilterTechnology</td>
+                            </tr>
+                            <tr>
+                                <td><b>Công suất lọc</b>: @Model.Specification.FilterCapacity</td>
+                            </tr>
+                            <tr>
+                                <td><b>Số lượng lõi lọc</b>: @Model.Specification.NumberFilterCores</td>
+                            </tr>
+                            <tr>
+                                <td><b>Hệ thống bơm</b>: @Model.Specification.Pumping</td>
+                            </tr>
+                            <tr>
+                                <td><b>Tùy chỉnh nhiệt độ</b>: @Model.Specification.Temperature</td>
+                            </tr>
+                        }
+
+                        @if (Model.CategoryId == bottleid)
+                        {
+                            <tr>
+                                <td><b>Kiểu máy</b>: @Model.Specification.MachineModel</td>
+                            </tr>
+                            <tr>
+                                <td><b>Chế độ an toàn</b>: @Model.Specification.Safemode</td>
+                            </tr>
+                            <tr>
+                                <td><b>Tùy chỉnh nhiệt độ</b>: @Model.Specification.Temperature</td>
+                            </tr>
+                            <tr>
+                                <td><b>Áp lực nước</b>: @Model.Specification.WaterPressure</td>
+                            </tr>
+                            <tr>
+                                <td><b>Thời gian đun nóng</b>: @Model.Specification.WarmUpTime</td>
+                            </tr>
+                            <tr>
+                                <td><b>Nhiệt độ tối đa</b>: @Model.Specification.MaxTemperature</td>
+                            </tr>
+                        }
+
+                        <tr>
+                            <td><b>Tiện ích</b>: @Model.Utilities</td>
+                        </tr>
+                        <tr>
+                            <td><b>Dung tích bình chứa</b>: @Model.TankCapacity lít</td>
+                        </tr>
+                        <tr>
+                            <td><b>Kích thước</b>: @Model.Size</td>
+                        </tr>
+                        <tr>
+                            <td><b>Trọng lượng</b>: @Model.Weight kg</td>
+                        </tr>
+                        <tr>
+                            <td><b>Thương hiệu của</b>: @Model.Manufactures</td>
+                        </tr>
+                        <tr>
+                            <td><b>Sản xuất tại</b>: @Model.MadeIn</td>
+                        </tr>
+                        <tr>
+                            <td><b>Năm ra mắt</b>: @Model.Year</td>
+                        </tr>
+                        <tr>
+                            <td><b>Hãng</b>: @Model.Brand.BrandName</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*các sản phẩm tương tự*@
+
+
+<div>
+    <hr />
+    <h3>Các sản phẩm tương tự</h3>
+    <div class=" row">
+        @for (int i = 0; i < lengthsp; i++)
+        {
+            <div class=" col-sm-3">
+
+                <div class=" card my-3 text-center">
+                    <a asp-controller="Home" asp-action="Detail" asp-route-id="@listsanpham[i].ProductId">
+                        <div class=" card">
+                            <div class=" card-header">
+                                <h6>@listsanpham[i].ProductName</h6>
+                            </div>
+                            <img src="@Url.Content("~/images/"+ listsanpham[i].Images.First().ImageName)" class="card-img-top" alt="Alternate Text" height="225" asp-append-version="true" />
+                            <div class=" card-footer">
+                                <h5 style="color: red"> @listsanpham[i].ProductPrice </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+    <hr />
+</div>
+
+@*thông tin chi tiết sản phẩm*@
+
+<div class=" row">
+    <div class=" col-9">
+        @Html.Raw(Model.Description.Replace("\r\n", "<br />"))ay
+    </div>
+    <div class=" col-3">
+        <ul class="list-group">
+            <li class="list-group-item active">Thông tin sản phẩm</li>
+            <li class="list-group-item"> <b>Công suất</b>: @Model.Wattage W</li>
+            <li class="list-group-item"><b>Chức năng</b>: @Model.Specification.Dynamic</li>
+            <li class="list-group-item"><b>Điều khiển</b>: @Model.Specification.Control</li>
+            <li class="list-group-item"><b>Phạm vi làm mát</b>: @Model.Specification.CollingRange</li>
+            <li class="list-group-item"><b>Độ ồn</b>: @Model.Specification.Noiselevel</li>
+            <li class="list-group-item"><b>Tiện ích</b>: @Model.Utilities</li>
+            <li class="list-group-item"><b>Sản xuất tại</b>: @Model.MadeIn</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+    </div>
+
+
+</div>

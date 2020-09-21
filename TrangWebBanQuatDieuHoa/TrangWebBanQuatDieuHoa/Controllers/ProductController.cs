@@ -13,7 +13,9 @@ namespace TrangWebBanQuatDieuHoa.Controllers
     public class ProductController : Controller
     {
         private readonly IProductRepository productRepository;
-
+        private const int fanId = 1;
+        private const int  bottleId = 3;
+        private const int filterId = 2;
         public ProductController(IProductRepository productRepository  )
         {
             this.productRepository = productRepository;
@@ -37,7 +39,18 @@ namespace TrangWebBanQuatDieuHoa.Controllers
                 var result = productRepository.Create(model, ImageFiles);
                 if (result > 0)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (model.CategoryId == fanId)
+                    {
+                        return RedirectToAction("ShowFan", "Product");
+                    }
+                    else if (model.CategoryId == filterId)
+                    {
+                        return RedirectToAction("ShowFilter", "Product");
+                    }
+                    else
+                    {
+                        return RedirectToAction("ShowBottle", "Product");
+                    }
                 }
                 
             }
@@ -46,70 +59,43 @@ namespace TrangWebBanQuatDieuHoa.Controllers
         }
         public IActionResult ShowFan()
         {
-            var fans = productRepository.GetAllByCategory(1).ToList();
+            var fans = productRepository.GetAllByCategory(fanId);
             return View(fans);
         }
         public IActionResult ShowFilter()
         {
-            var filters = productRepository.GetAllByCategory(2).ToList();
+            var filters = productRepository.GetAllByCategory(filterId);
             return View(filters);
         }
         public IActionResult ShowBottle()
         {
-            var filters = productRepository.GetAllByCategory(3).ToList();
+            var filters = productRepository.GetAllByCategory(bottleId);
             return View(filters);
         }
         [HttpGet]
         public IActionResult Edit(int id)
-        {          
-            var products = productRepository.GetAllByCategory(null).ToList();
-            var edit = products.FirstOrDefault(e => e.ProductId== id);
-            var createproduct = new CreateProduct()
-            {
-                ProductId = edit.ProductId,
-                ProductName = edit.ProductName,
-                CategoryId = edit.CategoryId,
-                ProductPrice = edit.ProductPrice,
-                Utilities = edit.Utilities,
-                Year = edit.Year,
-                Wattage = edit.Wattage,
-                WaterConsumption = edit.Specification.WaterConsumption,
-                WarmUpTime = edit.Specification.WarmUpTime,
-                WaterPressure = edit.Specification.WaterPressure,
-                Weight = edit.Weight,
-                WindFlow = edit.Specification.WindFlow,
-                WindMode = edit.Specification.WindMode,
-                WindSpeed = edit.Specification.WindSpeed,
-                Safemode = edit.Specification.Safemode,
-                Size = edit.Size,
-                CollingRange = edit.Specification.CollingRange,
-                Control = edit.Specification.Control,
-                Dynamic = edit.Specification.Dynamic,
-                Description = edit.Description,
-                FanCageType = edit.Specification.FanCageType,
-                FilterCapacity = edit.Specification.FilterCapacity,
-                FilterTechnology = edit.Specification.FilterTechnology,
-                MachineModel = edit.Specification.MachineModel,
-                MadeIn = edit.MadeIn,
-                Manufactures = edit.Manufactures,
-                MaxTemperature = edit.Specification.MaxTemperature,
-                Noiselevel = edit.Specification.Noiselevel,
-                NumberFilterCores = edit.Specification.NumberFilterCores,
-                Pumping = edit.Specification.Pumping,
-                TankCapacity = edit.TankCapacity,
-                Temperature = edit.Specification.Temperature,
-                images = edit.Images,
-                
-            };
+        {           
+            var createproduct = productRepository.ConvertToCreateProduct(id);
             return View(createproduct);
         }
         [HttpPost]
         public IActionResult Edit(CreateProduct editproduct, IFormFile[] ImageFiles)
         {
             var result = productRepository.Edit(editproduct, ImageFiles);
-            if (result > 0)
+            if (result.ProductId > 0)
             {
-                return RedirectToAction("Index", "Home");
+                if (result.CategoryId == fanId)
+                {
+                    return RedirectToAction("ShowFan", "Product");
+                }
+                else if (result.CategoryId==filterId)
+                {
+                    return RedirectToAction("ShowFilter", "Product");
+                }
+                else
+                {
+                    return RedirectToAction("ShowBottle", "Product");
+                }              
             }
             return View();
         }

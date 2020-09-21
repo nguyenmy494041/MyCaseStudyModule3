@@ -2,5 +2,42 @@
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
+<style>
+    .thumb {
+        height: 100px;
+        width: 150px;
+        padding-left: 10px;
+    }
+   </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
 
-<p>Use this page to detail your site's privacy policy.</p>
+
+
+
+    window.preview = function (input) {
+        $('#previewImg').empty();
+        if (input.files && input.files[0]) {
+            $(input.files).each(function (i, value) {
+                var reader = new FileReader();
+                reader.readAsDataURL(this);
+                reader.onload = function (e) {
+                    $("#previewImg").append("<img id='p"+ i +"' class='thumb'  onclick='xoa("+i+");' src='" + e.target.result + "'>");
+                }
+            });
+        }
+        //console.log(input.files);
+    }
+
+    function xoa(i) {      
+
+        $(`#p${i}`).remove();
+        
+    }
+
+     
+</script>
+
+
+<input type='file' id="imageInput" name="image" onchange="preview(this);" multiple="multiple" />
+<div id='previewImg'></div>
