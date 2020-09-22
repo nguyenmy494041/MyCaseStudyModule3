@@ -1,0 +1,26 @@
+﻿@model TrangWebBanQuatDieuHoa.Views.Order.ShowOrder
+@{ 
+    ViewBag.Title = "Xác nhận đơn hàng";
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var product = ViewBag.pro as Product;
+}
+
+
+<div class="col-8 ">
+    <h3 class=" text-danger">Xác nhận lại đơn đặt hàng</h3>
+    <p><b>Mã đơn hàng</b>: @Model.Ma</p>
+    <p><b>Tên khách hàng</b>: @Model.fullname</p>
+    <p><b>Địa chỉ</b>: @Model.Address</p>
+    <p><b>Số điện thoại</b>: @Model.Phone</p>
+    <p><b>Sản phẩm đặt mua</b>: @Model.ProductName</p>
+    <p><b>Giá sản phẩm</b>: @String.Format(info, "{0:#,##0 đ}", Model.ProductPrice)</p>
+    <p><b>Số lượng đặt mua</b>: @Model.Soluong</p>
+    <p><b>Tổng tiền thanh toán</b>:@String.Format(info, "{0:#,##0 đ}", Model.Total)</p>
+    <em>Thanh toán khi nhận hàng</em>
+    <br />
+    <div class="row">
+        <a asp-controller="Home" asp-action="Detail" asp-route-id="@product.ProductId" class="col-4 btn btn-success btn-lg btn-block my-3 mx-auto">Xác nhận</a>
+        <a asp-controller="Order" asp-action="HuyDonHang" asp-route-id="@Model.Ma" class="col-4 btn btn-danger btn-lg btn-block my-3 mx-auto">Huỷ đơn hàng</a>
+       
+    </div>
+</div>
