@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TrangWebBanQuatDieuHoa.Models;
+using TrangWebBanQuatDieuHoa.Models.Ordersss;
+using TrangWebBanQuatDieuHoa.Models.ViewModel;
 using TrangWebBanQuatDieuHoa.Repositories;
+using X.PagedList;
 
 namespace TrangWebBanQuatDieuHoa.Controllers
 {
@@ -48,31 +51,56 @@ namespace TrangWebBanQuatDieuHoa.Controllers
             var detail = productRepository.Get(id);
             if (detail != null)
             {
-                ViewBag.products = productRepository.Gets(detail.CategoryId, detail.ProductId);
-                //ViewData["listpros"] = productRepository.GetAllByCategory(detail.CategoryId);
+                ViewBag.products = productRepository.Gets(detail.CategoryId, detail.ProductId);               
                 return View(detail);
             }
             return View("~/Views/Shared/Error.cshtml", id);
         }
-        public IActionResult ShowFan()
+        public IActionResult ShowFan(int? page)
         {
-            var fans = productRepository.GetAllByCategory(fanId);
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            var fans = productRepository.GetAllByCategory(fanId).ToPagedList(pageNumber, pageSize);
             return View(fans);
         }
-        public IActionResult ShowFilter()
+        public IActionResult ShowFilter(int? page)
         {
-            var filters = productRepository.GetAllByCategory(filterId);
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            var filters = productRepository.GetAllByCategory(filterId).ToPagedList(pageNumber, pageSize);
             return View(filters);
         }
-        public IActionResult ShowBottle()
+        public IActionResult ShowBottle(int? page)
         {
-            var filters = productRepository.GetAllByCategory(bottleId);
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            var filters = productRepository.GetAllByCategory(bottleId).ToPagedList(pageNumber, pageSize);
             return View(filters);
         }
-        public IActionResult Search(string Search)
+
+        public IActionResult Search(string Search, int? page)
         {
-            var result = productRepository.Search(Search);
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            ViewBag.search = new State() { StateName = Search };
+            var result = productRepository.Search(Search).ToPagedList(pageNumber, pageSize);
             return View(result);
         }
+
+        public IActionResult LocSanPham(int? categoryId, int? brandId, int? price, int? sortByPrice,int? page)
+        {
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            ViewBag.search = new LocSanPham() { brandId = brandId,categoryId = categoryId,price=price,sortByPrice=sortByPrice };
+            var dat = productRepository.LocSanPham(categoryId,brandId,price,sortByPrice).ToPagedList(pageNumber, pageSize);
+            return View(dat);
+        }
+
+        public IActionResult History()
+        {
+            return View();
+        }
+        
     }
+
 }

@@ -81,7 +81,7 @@
             <p style=" color:green">Miễn phí giao hàng</p><br />
 
 
-            <a style="line-height: 10px" class="btn btn-success btn-lg btn-block"><p><b>MUA NGAY</b><div style=" font-size:15px">Hàng chính hãng 100%</div></p></a>
+            <a asp-controller="Order" asp-action="Buy" asp-route-id="@Model.ProductId" style="line-height: 10px" class="btn btn-success btn-lg btn-block"><p><b>MUA NGAY</b><div style=" font-size:15px">Hàng chính hãng 100%</div></p></a>
             <a style="line-height: 10px" class="btn btn-info btn-lg btn-block"><p><b>MUA TRẢ GÓP 0%</b><div style=" font-size:15px">Thủ tục đơn giản</div></p></a>
             <br /><b>Gói trả góp 0% phổ biến nhất</b>
 
@@ -163,10 +163,10 @@
                                 <td><b>Công nghệ lọc</b>: @Model.Specification.FilterTechnology</td>
                             </tr>
                             <tr>
-                                <td><b>Công suất lọc</b>: @Model.Specification.FilterCapacity</td>
+                                <td><b>Công suất lọc</b>: @Model.Specification.FilterCapacity lít/giờ</td>
                             </tr>
                             <tr>
-                                <td><b>Số lượng lõi lọc</b>: @Model.Specification.NumberFilterCores</td>
+                                <td><b>Số lượng lõi lọc</b>: @Model.Specification.NumberFilterCores lõi</td>
                             </tr>
                             <tr>
                                 <td><b>Hệ thống bơm</b>: @Model.Specification.Pumping</td>
@@ -188,13 +188,13 @@
                                 <td><b>Tùy chỉnh nhiệt độ</b>: @Model.Specification.Temperature</td>
                             </tr>
                             <tr>
-                                <td><b>Áp lực nước</b>: @Model.Specification.WaterPressure</td>
+                                <td><b>Áp lực nước</b>: @Model.Specification.WaterPressure atm</td>
                             </tr>
                             <tr>
-                                <td><b>Thời gian đun nóng</b>: @Model.Specification.WarmUpTime</td>
+                                <td><b>Thời gian đun nóng</b>: @Model.Specification.WarmUpTime phút</td>
                             </tr>
                             <tr>
-                                <td><b>Nhiệt độ tối đa</b>: @Model.Specification.MaxTemperature</td>
+                                <td><b>Nhiệt độ tối đa</b>: @Model.Specification.MaxTemperature độ </td>
                             </tr>
                         }
 
@@ -242,7 +242,7 @@
     <div class=" row">
         @for (int i = 0; i < lengthsp; i++)
         {
-            <div class=" col-sm-3">
+            @*<div class=" col-sm-3">
 
                 <div class=" card my-3 text-center">
                     <a asp-controller="Home" asp-action="Detail" asp-route-id="@listsanpham[i].ProductId">
@@ -257,6 +257,25 @@
                         </div>
                     </a>
                 </div>
+            </div>*@
+            <div class="col-md-4 col-lg-3 col-sm-6 col-xl-2 col-6 card-group">
+                <div class="card rounded my-3 bg-transparent py-2">
+                    <a asp-controller="Home" asp-action="Detail" asp-route-id="@listsanpham[i].ProductId">
+                        @{
+
+                            <img src="@Url.Content("~/images/"+ listsanpham[i].Images.First().ImageName)" alt="@listsanpham[i].ProductName" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
+
+                        }
+                    </a>
+                    <h6 class="card-body">
+                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@listsanpham[i].ProductId" class="card-link">
+                            @listsanpham[i].ProductName
+                        </a>
+                    </h6>
+                    <h6 class="card-footer text-center text-danger bg-transparent">
+                        @String.Format(info, "{0:#,##0 đ}", listsanpham[i].ProductPrice)
+                    </h6>
+                </div>
             </div>
         }
     </div>
@@ -265,11 +284,17 @@
 
 @*thông tin chi tiết sản phẩm*@
 
-<div class=" row">
-    <div class=" col-9">
-        @Html.Raw(Model.Description.Replace("\r\n", "<br />"))ay
+<div class="mt-2 row">
+    <div class=" col-1">
+
     </div>
-    <div class=" col-3">
+    <div class="col-10">
+        <h3 class="my-2 text-danger">Đánh giá sản phẩm</h3>
+        <div class="motasanpham" id="motachitietsanpham">
+            @Html.Raw(Model.Description.Replace("\r\n", "<br />"))           
+        </div>
+    </div>
+    @*<div class=" col-3">
         <ul class="list-group">
             <li class="list-group-item active">Thông tin sản phẩm</li>
             <li class="list-group-item"> <b>Công suất</b>: @Model.Wattage W</li>
@@ -281,7 +306,7 @@
             <li class="list-group-item"><b>Sản xuất tại</b>: @Model.MadeIn</li>
             <li class="list-group-item">Vestibulum at eros</li>
         </ul>
-    </div>
+    </div>*@
 
 
 </div>

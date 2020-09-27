@@ -1,0 +1,30 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@*@using X.PagedList.Mvc.Comm;*@
+@model IPagedList<TinhThanh>
+@{
+    ViewBag.Title = "tỉnh thành";
+}
+<div>
+    @foreach (var item in Model)
+    {
+        <p>@item.TenDayDu</p>
+       
+    }
+</div>
+<div>
+
+    <b>  Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</b>
+        @Html.PagedListPager(Model, page => Url.Action("Danhsachtinhthanh", new { page }))
+
+   
+</div>
+
+<style>
+    .pagination > li {
+        border: 1px solid #000000;
+        padding: 0 10px !important;
+        margin-right: 1px;
+        
+    }
+</style>

@@ -4,7 +4,7 @@
     ViewBag.Title = "Các loại sản phẩm";
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
-}
+
 <br />
 <h4 class=" text-center">Danh sách các loại sản phẩm có trong cửa hàng</h4>
 <br />
@@ -27,26 +27,28 @@
                     <td>@item.CategoryId</td>
                     <td>@item.CategoryName</td>
                     <td>
-                        <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.CategoryId"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#category-@item.CategoryId">
-                            Delete
-                        </button>
-                        <div class="modal" id="category-@item.CategoryId">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header ">
-                                        <h2 class="modal-title" style="margin: auto;color: red">Xóa thương hiệu</h2>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h6> Are you sure you want to delete Role "@item.CategoryName" ?</h6>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-danger">Yes</a>
-                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                        <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.CategoryId"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:void(0)" class="text-danger" onclick="category.delete('@item.CategoryId')"><i class="fa fa-trash"></i></a>
+                        @*<a asp-controller="Category" asp-action="Edit" asp-route-id="@item.CategoryId"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#category-@item.CategoryId">
+                                Delete
+                            </button>
+                            <div class="modal" id="category-@item.CategoryId">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header ">
+                                            <h2 class="modal-title" style="margin: auto;color: red">Xóa thương hiệu</h2>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6> Are you sure you want to delete Role "@item.CategoryName" ?</h6>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-danger">Yes</a>
+                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div>*@
                     </td>
 
                 </tr>
@@ -73,4 +75,6 @@
             );
         });
     </script>
+    <script src="~/lib/bootbox/bootbox.js"></script>
+    <script src="~/js/deletecategory.js"></script>
 }

@@ -14,7 +14,7 @@
             <th>Tên sản phẩm </th>
             <th>Giá sản phẩm</th>
             <th>Công suất</th>
-            <th>Chức năng </th>
+            <th>Hình sản phẩm</th>
             <th>Thao tác </th>
 
         </tr>
@@ -30,10 +30,20 @@
                 <td>@item.ProductName</td>
                 <td>@item.ProductPrice</td>
                 <td>@item.Wattage W</td>
-                <td>@item.Specification.Dynamic</td>
                 <td>
-                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#gia-@item.ProductPrice">
+                    @if (item.Images == null || item.Images.Count == 0)
+                    {
+                        <div> Chưa có hình sản phẩm</div>
+                    }
+                    else
+                    {
+                        <img width="100" src="~/images/@item.Images.ToList()[0].ImageName" />
+                    }
+            </td>
+            <td>
+                <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fa fa-edit"></i></a>
+                <a href="javascript:void(0)" class="text-danger" onclick="fan.delete('@item.ProductId')"><i class="fa fa-trash"></i></a>
+                @*<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#gia-@item.ProductPrice">
                         Delete
                     </button>
                     <div class="modal" id="gia-@item.ProductPrice">
@@ -51,13 +61,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </td>
+                    </div>*@
+            </td>
 
-            </tr>
+        </tr>
 
 
-        }
+    }
 
     </tbody>
 </table>
@@ -66,16 +76,19 @@
     <script>
         $(document).ready(function () {
             $('#dataTable').dataTable(
-                //{
-                //    "columnDefs": [
-                //        {
-                //            "targets": 7,
-                //            "orderable": false
-                //        },
+                {
+                    "columnDefs": [
+                        {
+                            "targets": 7,
+                            "orderable": false
+                        },
 
-                //    ]
-                //}
+                    ]
+                }
             );
         });
     </script>
+    <script src="~/lib/bootbox/bootbox.js"></script>
+    <script src="~/js/deletefan.js"></script>
+
 }

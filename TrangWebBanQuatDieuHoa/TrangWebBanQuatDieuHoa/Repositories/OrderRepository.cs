@@ -27,15 +27,16 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                 var oder = new Order()
                 {
                     Fullname = model.Fullname,
-                    ProductName=model.ProductName,
-                    ProductPrice=model.ProductPrice,
-                    Adress=model.Adress,
-                    TinhThanhId=model.TinhThanhId,
-                    QuanHuyenId=model.QuanHuyenId,
-                    PhuongXaId=model.PhuongXaId,
-                    SoDienThoai=model.SoDienThoai,
-                    Soluong=model.Soluong,
-                    Status = "Chờ xử lý",
+                    ProductName = model.ProductName,
+                    ProductPrice = model.ProductPrice,
+                    Adress = model.Adress,
+                    TinhThanhId = model.TinhThanhId,
+                    QuanHuyenId = model.QuanHuyenId,
+                    PhuongXaId = model.PhuongXaId,
+                    SoDienThoai = model.SoDienThoai,
+                    Soluong = model.Soluong,
+                    StateId = 1,
+                    ThoiDiemDatHang = DateTime.Now,
                     Total=model.Soluong * model.ProductPrice,                
             };
               
@@ -53,7 +54,7 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                       join t in context.TinhThanh on o.TinhThanhId equals t.TinhThanhId
                       join q in context.QuanHuyen on o.QuanHuyenId equals q.QuanHuyenId
                       join p in context.PhuongXa on o.PhuongXaId equals p.PhuongXaId
-                    
+                      join s in context.States on o.StateId equals s.StateId
                       select (new ShowOrder()
                       {
                           Ma =o.OrderId,
@@ -121,6 +122,39 @@ namespace TrangWebBanQuatDieuHoa.Repositories
         {
             var result = context.QuanHuyen.Where(e => e.TinhThanhId == idTinh).ToList();
             return result;
+        }
+
+        public List<Order> OrderShowAdmin()
+        {
+           var dat = context.Order.Include(e => e.PhuongXa).Include(e=>e.PhuongXa.QuanHuyen).Include(e => e.PhuongXa.QuanHuyen.TinhThanh).Include(e => e.State).Where(e=>e.StateId ==1).ToList();
+            return dat;
+        }
+
+        public Order XemChiTietDonHang(int orderId)
+        {
+            return context.Order.Include(e => e.PhuongXa).Include(e => e.PhuongXa.QuanHuyen).Include(e => e.PhuongXa.QuanHuyen.TinhThanh).Include(e => e.State).FirstOrDefault(e => e.OrderId == orderId);
+        }
+
+        public List<Order> LayDanhSachDonHang(string number)
+        {
+            return context.Order.Include(e => e.PhuongXa).Include(e => e.PhuongXa.QuanHuyen).Include(e => e.PhuongXa.QuanHuyen.TinhThanh).Include(e => e.State).Where(e => e.SoDienThoai == number).ToList();
+        }
+
+        public Order XacNhanGiaoHang(int orderId)
+        {
+            var oder = context.Order.Find(orderId);
+            if (oder!=null)
+            {
+                oder.StateId = 2;
+                context.SaveChanges();
+            }
+            return oder;
+        }
+
+        public List<Order> DonHangDaGiao()
+        {
+            var dat = context.Order.Include(e => e.PhuongXa).Include(e => e.PhuongXa.QuanHuyen).Include(e => e.PhuongXa.QuanHuyen.TinhThanh).Include(e => e.State).Where(e => e.StateId == 2).ToList();
+            return dat;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@model List<Product>
+@inject AppDbContext context
 @{
     ViewBag.Title = "Trang chủ";
     const int fanId = 1;
@@ -7,48 +8,155 @@
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
 
-<div class="row ">
-    <div class="col-10 bg-white">
-        <h2>Quạt hơi nước</h2>
+<div class="row my-3">
+    <div class="col-lg-4 col-xl-3">
+       
+        <form asp-controller="Home" asp-action="LocSanPham" method="post" enctype="multipart/form-data" class="form-group">
+            <div class="list-group-item">
+                <h5 class="bg-secondary rounded text-light py-2 text-center">Lọc sản phẩm <i class="fas fa-search"></i></h5>
+            </div>
+                <div class="list-group-item">
+                    <select name="categoryId" class="custom-select form-control" id="categoryId">
+                        <option>Chọn danh mục</option>
 
+                        @foreach (var ctg in context.Categories)
+                        {
+                            <option value="@ctg.CategoryId">@ctg.CategoryName</option>
+                        }
+
+                    </select>
+                </div>
+                <div class="list-group-item">
+                    <select name="brandId" class="custom-select form-control" id="brandId">
+                        <option>Chọn thương hiệu</option>
+
+                        @foreach (var brand in context.Brands)
+                        {
+                            <option value="@brand.BrandId">@brand.BrandName</option>
+                        }
+
+                    </select>
+                </div>
+
+                <div class="list-group-item">
+                    <select name="price" class="custom-select form-control" id="categoryId">
+                        <option>Chọn mức giá</option>
+                        <option value="1">Từ 1-4 triệu</option>
+                        <option value="2">Từ 4-8 triệu</option>
+                        <option value="3">Trên 8 triệu</option>
+
+
+                    </select>
+                </div>
+                <div class="list-group-item">
+                    <select name="sortByPrice" class="custom-select form-control" id="sortByPrice">
+                        <option>Sắp xếp theo giá</option>
+                        <option value="1">Tăng dần</option>
+                        <option value="2">Giảm dần</option>
+                    </select>
+                </div>
+                <div class="list-group-item text-center">
+                    <input class="btn btn-primary" type="submit" value="Tìm kiếm" />
+                </div>
+        </form>
+    </div>
+
+    <div class="col-lg-8 col-xl-9">
+          <div id="demo" class="carousel slide" data-ride="carousel">
+
+                 
+                <ul class="carousel-indicators">
+                    @for (var i = 0; i < 4; i++)
+                    {
+                        if (i == 0)
+                        {
+                            <li data-target="#demo" data-slide-to="@i" class="active"></li>
+                        }
+                        else
+                        {
+                            <li data-target="#demo" data-slide-to="@i"></li>
+                        }
+                    }
+                </ul>
+
+                
+                <div class="carousel-inner">
+
+
+                    <div class="carousel-item active">
+                        <img src="~/images/anh/BANNER-zalo.jpg" style="height: 400px; max-width: 100%;">
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="~/images/anh/BANNER-WEB-QUAT-LAM-MAT-87d997c6.png" style="height: 400px; max-width: 100%;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/images/anh/banner-alaska-quat-lam-mat-02.jpg" style="height: 400px; max-width: 100%;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/images/anh/banner-may-lam-mat-cao-cap-daikio.jpg" style="height: 400px; max-width: 100%;">
+                    </div>
+
+                </div>
+
+                
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+            </div>
+        
+    </div>
+</div>
+
+
+
+
+
+
+<div class="row ">
+    <div class="col-12 bg-white">
+        @*<h2 class="mt-4 text-success">Quạt hơi nước</h2>*@
+        <button type="button" class="btn btn-primary btn-lg btn-block"><strong>Quạt hơi nước</strong></button>
         <div class=" row">
             @foreach (var steam in Model)
             {
                 if (steam.CategoryId == fanId)
                 {
 
-                    <div class=" col-sm-3">
-
-                        <div class=" card my-3 text-center">
+                    <div class="col-md-4 col-lg-3 col-sm-6 col-xl-2 col-6 card-group">
+                        <div class="card rounded my-3 bg-transparent py-2">
                             <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId">
-                                <div class=" card">
-                                    <div class=" card-header">
-                                        <h6>@steam.ProductName</h6>
-                                    </div>
-                                    <img src="@Url.Content("~/images/"+ steam.Images.First().ImageName)" class="card-img-top" alt="Alternate Text" height="225" asp-append-version="true" />
-                                    <div class=" card-footer">
-                                        <h5 style="color: red">@String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)</h5>
-                                    </div>
-                                </div>
+                                @{
+
+                                    <img src="@Url.Content("~/images/"+ steam.Images.First().ImageName)" alt="@steam.ProductName" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
+
+                                }
                             </a>
+                            <h6 class="card-body">
+                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId" class="card-link">
+                                    @steam.ProductName
+                                </a>
+                            </h6>
+                            <h6 class="card-footer text-center text-danger bg-transparent">
+                                @String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)
+                            </h6>
                         </div>
                     </div>
-
                 }
-
-
             }
         </div>
         <br />
-        <h2>Lọc nước</h2>
-
+        @*<h2 class=" text-success">Lọc nước</h2>*@
+        <button type="button" class="btn btn-info btn-lg btn-block"><strong>Lọc nước</strong></button>
         <div class=" row">
             @foreach (var steam in Model)
             {
                 if (steam.CategoryId == filterId)
                 {
-
-                    <div class=" col-sm-3">
+                    @*<div class=" col-sm-3">
 
                         <div class=" card my-3 text-center">
                             <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId">
@@ -63,37 +171,57 @@
                                 </div>
                             </a>
                         </div>
+                    </div>*@
+
+                    <div class="col-md-4 col-lg-3 col-sm-6 col-xl-2 col-6 card-group">
+                        <div class="card rounded my-3 bg-transparent py-2">
+                            <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId">
+                                @{
+                                    
+                                        <img src="@Url.Content("~/images/"+ steam.Images.First().ImageName)" alt="@steam.ProductName" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
+                                    
+                                }
+                            </a>
+                            <h6 class="card-body">
+                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId" class="card-link">
+                                    @steam.ProductName
+                                </a>
+                            </h6>
+                            <h6 class="card-footer text-center text-danger bg-transparent">
+                                @String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)
+                            </h6>
+                        </div>
                     </div>
-
                 }
-
-
             }
         </div>
 
         <br />
-        <h2>Bình nóng lạnh</h2>
-
+        @*<h2 class=" text-success">Bình nóng lạnh</h2>*@
+        <button type="button" class="btn btn-primary btn-lg btn-block"><strong>Máy nóng lạnh</strong></button>
         <div class=" row">
             @foreach (var steam in Model)
             {
                 if (steam.CategoryId == bottleId)
                 {
 
-                    <div class=" col-sm-3">
-
-                        <div class=" card my-3 text-center">
+                    <div class="col-md-4 col-lg-3 col-sm-6 col-xl-2 col-6 card-group">
+                        <div class="card rounded my-3 bg-transparent py-2">
                             <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId">
-                                <div class=" card">
-                                    <div class=" card-header">
-                                        <h6>@steam.ProductName</h6>
-                                    </div>
-                                    <img src="@Url.Content("~/images/"+ steam.Images.First().ImageName)" class="card-img-top" alt="Alternate Text" height="225" asp-append-version="true" />
-                                    <div class=" card-footer">
-                                        <h5 style="color: red">@String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)</h5>
-                                    </div>
-                                </div>
+                                @{
+
+                                    <img src="@Url.Content("~/images/"+ steam.Images.First().ImageName)" alt="@steam.ProductName" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
+
+                                }
                             </a>
+                            <h6 class="card-body">
+                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId" class="card-link">
+                                    @steam.ProductName
+                                </a>
+                            </h6>
+                            <h6 class="card-footer text-center text-danger bg-transparent">
+                                @String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)
+                            </h6>
                         </div>
                     </div>
 
@@ -106,62 +234,62 @@
 
 
 
-    <div class=" col-2 bg-white">
-        <br /><br />
-              <form class="border container bg-blue">
-                  <h5>Lọc sản phẩm</h5>
-                  <p>Theo hãng:</p>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="Daikiosan">
-                      <label class="form-check-label" for="Daikiosan">
-                          <img width="70" src="~/images/thuonghieu/Daikiosan7498-s_32.png"/>
-                      </label>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="Kangaroo">
-                      <label class="form-check-label" for="Kangaroo">
-                          <img width="70" src="~/images/thuonghieu/Kangaroo7498-s_52.png" />
-                      </label>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="Sunhouse">
-                      <label class="form-check-label" for="Sunhouse">
-                          <img width="70" src="~/images/thuonghieu/Sunhouse7498-s_18.png" />
-                      </label>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="Delites">
-                      <label class="form-check-label" for="Delites">
-                          <img height="25" src="~/images/thuonghieu/Delites7498-s_34.png" />
-                      </label>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="Midea">
-                      <label class="form-check-label" for="Midea">
-                          <img height="25" src="~/images/thuonghieu/Midea7498-s_36.png" />
-                      </label>
-                  </div>
-                  <br />
-                  <p>Theo giá:</p>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="gia1">
-                      <label class="form-check-label" for="gia1">
-                          Từ 1-4 triệu
-                      </label>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="gia12">
-                      <label class="form-check-label" for="gia12">
-                          Từ 4-8 triệu
+    @*<div class=" col-2 bg-white">
+            <br /><br />
+                  <form class="border container bg-blue">
+                      <h5>Lọc sản phẩm</h5>
+                      <p>Theo hãng:</p>
+                      <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="Daikiosan">
+                          <label class="form-check-label" for="Daikiosan">
+                              <img width="70" src="~/images/thuonghieu/Daikiosan7498-s_32.png"/>
+                          </label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="Kangaroo">
+                          <label class="form-check-label" for="Kangaroo">
+                              <img width="70" src="~/images/thuonghieu/Kangaroo7498-s_52.png" />
+                          </label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="Sunhouse">
+                          <label class="form-check-label" for="Sunhouse">
+                              <img width="70" src="~/images/thuonghieu/Sunhouse7498-s_18.png" />
+                          </label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="Delites">
+                          <label class="form-check-label" for="Delites">
+                              <img height="25" src="~/images/thuonghieu/Delites7498-s_34.png" />
+                          </label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="Midea">
+                          <label class="form-check-label" for="Midea">
+                              <img height="25" src="~/images/thuonghieu/Midea7498-s_36.png" />
+                          </label>
+                      </div>
+                      <br />
+                      <p>Theo giá:</p>
+                      <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="gia1">
+                          <label class="form-check-label" for="gia1">
+                              Từ 1-4 triệu
+                          </label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="gia12">
+                          <label class="form-check-label" for="gia12">
+                              Từ 4-8 triệu
 
-                      </label>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="gia123">
-                      <label class="form-check-label" for="gia123">
-                          Trên 8 triệu
-                      </label>
-                  </div>
-              </form>
-    </div>
+                          </label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="gia123">
+                          <label class="form-check-label" for="gia123">
+                              Trên 8 triệu
+                          </label>
+                      </div>
+                  </form>
+        </div>*@
 </div>

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TrangWebBanQuatDieuHoa.Models;
+using TrangWebBanQuatDieuHoa.Models.Ordersss;
 using TrangWebBanQuatDieuHoa.Models.Products;
 
 namespace TrangWebBanQuatDieuHoa.Repositories
@@ -25,11 +26,11 @@ namespace TrangWebBanQuatDieuHoa.Repositories
 
 
 
-        public IEnumerable<Product> GetAllByCategory(int? categoryId)
+        public List<Product> GetAllByCategory(int? categoryId)
         {
 
             List<Product> products = context.Products.Include(e => e.Specification)
-              .Include(e => e.Images).Include(e => e.Category).ToList();
+              .Include(e => e.Images).Include(e => e.Category).Include(e => e.Brand).ToList();
             var query = products.AsQueryable();
             if(categoryId!=null)
             {
@@ -41,7 +42,7 @@ namespace TrangWebBanQuatDieuHoa.Repositories
         public int Create(CreateProduct createProduct, IFormFile[] ImageFiles)
         {
             var exit = context.Products.FirstOrDefault(e => e.ProductCode == createProduct.ProductCode && e.CategoryId == createProduct.CategoryId);
-            if (createProduct!= null && ImageFiles !=null && exit == null)
+            if (createProduct!= null /*&& ImageFiles !=null*/ && exit == null)
             {
                 var product = new Product()
                 {
@@ -121,9 +122,11 @@ namespace TrangWebBanQuatDieuHoa.Repositories
 
 
 
-        public int Edit(CreateProduct editproduct, IFormFile[] ImageFiles)
+        public Product Edit(CreateProduct editproduct, IFormFile[] ImageFiles)
         {
-            var exit = context.Products.Find(editproduct.ProductId);
+            var exit = context.Products.Include(e => e.Specification)
+              .Include(e => e.Images).Include(e => e.Category).FirstOrDefault(e => e.ProductId == editproduct.ProductId);
+            //var exit = context.Products.Find(editproduct.ProductId);
             if (exit != null)
             {
                 exit.ProductName = editproduct.ProductName;
@@ -135,37 +138,42 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                 exit.Utilities = editproduct.Utilities;
                 exit.Manufactures = editproduct.Manufactures;
                 exit.MadeIn = editproduct.MadeIn;
+                //exit.CategoryId = editproduct.CategoryId;
                 //exit.BrandId = editproduct.BrandId;
                 exit.Year = editproduct.Year;
                 exit.Description = editproduct.Description;
-                var spec = context.Specifications.FirstOrDefault(p => p.ProductId == exit.ProductId);
+                //var spec = context.Specifications.FirstOrDefault(p => p.ProductId == exit.ProductId);
+                var spec = new Specification()
+                {
+                Dynamic = editproduct.Dynamic,
+                WindSpeed = editproduct.WindSpeed,
+                WindFlow = editproduct.WindFlow,
+                WindMode = editproduct.WindMode,
+                Control = editproduct.Control,
+                CollingRange = editproduct.CollingRange,
+                FanCageType = editproduct.FanCageType,
+                Noiselevel = editproduct.Noiselevel,
+                WaterConsumption = editproduct.WaterConsumption,
+                MachineModel = editproduct.MachineModel,
+                FilterTechnology = editproduct.FilterTechnology,
+                FilterCapacity = editproduct.FilterCapacity,
+                Pumping = editproduct.Pumping,
+                Safemode = editproduct.Safemode,
+                Temperature = editproduct.Temperature,
+                WaterPressure = editproduct.WaterPressure,
+                WarmUpTime = editproduct.WarmUpTime,
+                MaxTemperature = editproduct.MaxTemperature,
+                NumberFilterCores = editproduct.NumberFilterCores,
+                ProductId = editproduct.ProductId
+            };
 
-                spec.Dynamic = editproduct.Dynamic;
-                spec.WindSpeed = editproduct.WindSpeed;
-                spec.WindFlow = editproduct.WindFlow;
-                spec.WindMode = editproduct.WindMode;
-                spec.Control = editproduct.Control;
-                spec.CollingRange = editproduct.CollingRange;
-                spec.FanCageType = editproduct.FanCageType;
-                spec.Noiselevel = editproduct.Noiselevel;
-                spec.WaterConsumption = editproduct.WaterConsumption;
-                spec.MachineModel = editproduct.MachineModel;
-                spec.FilterTechnology = editproduct.FilterTechnology;
-                spec.FilterCapacity = editproduct.FilterCapacity;
-                spec.Pumping = editproduct.Pumping;
-                spec.Safemode = editproduct.Safemode;
-                spec.Temperature = editproduct.Temperature;
-                spec.WaterPressure = editproduct.WaterPressure;
-                spec.WarmUpTime = editproduct.WarmUpTime;
-                spec.MaxTemperature = editproduct.MaxTemperature;               
-                
-              
+                exit.Specification = spec;
                 List<Image> images = new List<Image>();
                 if (editproduct.ImageFiles != null)
                 {
-                    List<Image> imagesList = context.Images.ToList().FindAll(el => el.ProductId == exit.ProductId);
-                    context.RemoveRange(imagesList);
-                    context.SaveChangesAsync();
+                    //List<Image> imagesList = context.Images.ToList().FindAll(el => el.ProductId == exit.ProductId);
+                    //context.RemoveRange(imagesList);
+                    //context.SaveChangesAsync();
 
                     var iamge = editproduct.ImageFiles.ToList();
                     string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
@@ -183,15 +191,16 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                             ProductId = exit.ProductId,
                             ImageName = fileName
                         };
-                        context.Images.Add(anh);
+                        images.Add(anh);
 
                     }
-                    //exit.Images = images;
-                  
+                    exit.Images = images;
+
                 }
-                return context.SaveChanges();
+                context.SaveChanges();
+                return exit;
             }
-            return -1;
+            return new Product();
         }
 
         public int Delete(int id)
@@ -209,12 +218,113 @@ namespace TrangWebBanQuatDieuHoa.Repositories
 
         public CreateProduct ConvertToCreateProduct(int id)
         {
-            var pro = context.Products.Find(id);
-            var spec = context.Specifications.FirstOrDefault(q => q.ProductId == pro.ProductId);
-            var image = context.Images.Where(q => q.ProductId == pro.ProductId).ToList();
-            return null;
+            Product edit = Get(id);
+            //Product edit = context.Products.Include(e => e.Specification)
+            //  .Include(e => e.Images).Include(e => e.Category).FirstOrDefault(e => e.ProductId == id);
+            //var products = productRepository.GetAllByCategory(null).ToList();
+            //var edit = context.Products.FirstOrDefault(e => e.ProductId == id);
+            var createproduct = new CreateProduct()
+            {
+                ProductId = edit.ProductId,
+                ProductName = edit.ProductName,
+                CategoryId = edit.CategoryId,
+                ProductPrice = edit.ProductPrice,
+                Utilities = edit.Utilities,
+                Year = edit.Year,
+                Wattage = edit.Wattage,
+                WaterConsumption = edit.Specification.WaterConsumption,
+                WarmUpTime = edit.Specification.WarmUpTime,
+                WaterPressure = edit.Specification.WaterPressure,
+                Weight = edit.Weight,
+                WindFlow = edit.Specification.WindFlow,
+                WindMode = edit.Specification.WindMode,
+                WindSpeed = edit.Specification.WindSpeed,
+                Safemode = edit.Specification.Safemode,
+                Size = edit.Size,
+                CollingRange = edit.Specification.CollingRange,
+                Control = edit.Specification.Control,
+                Dynamic = edit.Specification.Dynamic,
+                Description = edit.Description,
+                FanCageType = edit.Specification.FanCageType,
+                FilterCapacity = edit.Specification.FilterCapacity,
+                FilterTechnology = edit.Specification.FilterTechnology,
+                MachineModel = edit.Specification.MachineModel,
+                MadeIn = edit.MadeIn,
+                Manufactures = edit.Manufactures,
+                MaxTemperature = edit.Specification.MaxTemperature,
+                Noiselevel = edit.Specification.Noiselevel,
+                NumberFilterCores = edit.Specification.NumberFilterCores,
+                Pumping = edit.Specification.Pumping,
+                TankCapacity = edit.TankCapacity,
+                Temperature = edit.Specification.Temperature,
+                images = edit.Images,
+
+            };
+            return createproduct;
         }
 
-       
+        public Product Get(int id)
+        {
+            return context.Products.Include(e => e.Specification)
+             .Include(e => e.Images).Include(e => e.Category).Include(e => e.Brand).FirstOrDefault(e => e.ProductId == id);
+        }
+
+        public List<Product> Gets(int caregoryid, int productid)
+        {
+            return context.Products.Include(e => e.Specification)
+            .Include(e => e.Images).Include(e => e.Category).Include(e => e.Brand).Where(
+                e => e.ProductId != productid && e.CategoryId== caregoryid).ToList();
+        }
+
+        public List<Product> Search(string name)
+        {
+            return context.Products.Include(e => e.Specification)
+         .Include(e => e.Images).Include(e => e.Category).Include(e => e.Brand).Where(
+             e => e.ProductName.Contains(name)).ToList();
+        }
+
+        public List<Product> LocSanPham(int? categoryId, int? brandId, int? price, int? sortByPrice)
+        {
+            var data = context.Products.Include(e => e.Specification)
+           .Include(e => e.Images).Include(e => e.Category).Include(e => e.Brand).ToList();
+            if (categoryId.HasValue)
+            {
+                data = data.Where(e => e.CategoryId == categoryId).ToList();
+            }
+            if (brandId.HasValue)
+            {
+                data = data.Where(e => e.BrandId == brandId).ToList();
+            }
+            if (price.HasValue)
+            {
+                if (price == 1)
+                {
+                    data = data.Where(e => e.ProductPrice >= 1000000 && e.ProductPrice < 4000000).ToList();
+                        }
+                else if (price == 2)
+                {
+                    data = data.Where(e => e.ProductPrice >= 4000000 && e.ProductPrice < 8000000).ToList();
+                }
+                else
+                {
+                    data = data.Where(e => e.ProductPrice >= 8000000).ToList();
+                }
+            }
+            if (sortByPrice.HasValue)
+            {
+                if (sortByPrice == 2)
+                {
+                    data = data.OrderByDescending(e=>e.ProductPrice).ToList();
+                }
+                else
+                {
+                    data = data.OrderBy(e=>e.ProductPrice).ToList();
+                }
+            }
+
+            return data;
+        }
+
+        
     }
 }

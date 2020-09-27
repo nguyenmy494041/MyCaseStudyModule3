@@ -1,99 +1,102 @@
-﻿@model List<Product>
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<Product>
+@inject AppDbContext context
 @{
-    ViewBag.Title = "Trang chủ";  
+    ViewBag.Title = "Trang chủ";
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
-<div class=" row">
-    <div class=" col-10 bg-light">
-        <div class="row">
-            <img style="width: 33%" src="~/images/thuonghieu/quat-dieu-hoa-karofi-kac-e41-2.jpg" />
-            <img style="width: 33%" src="~/images/thuonghieu/images (1).jpg" />
-            <img style="width: 33%" src="~/images/thuonghieu/images.jpg" />
-        </div>
-        <h2>Quạt hơi nước</h2>
 
+<div class="row">
+    <img style="width: 33%" src="~/images/thuonghieu/quat-dieu-hoa-karofi-kac-e41-2.jpg" />
+    <img style="width: 33%" src="~/images/thuonghieu/images (1).jpg" />
+    <img style="width: 33%" src="~/images/thuonghieu/images.jpg" />
+</div>
+<button type="button" class="btn btn-primary btn-lg btn-block mt-3"><strong>Quạt hơi nước</strong></button>
+<div class=" row">
+    <div class=" col-9 bg-light">
         <div class=" row">
             @foreach (var steam in Model)
             {
-
-                <div class=" col-sm-3">
-
-                    <div class=" card my-3 text-center">
+                <div class="col-md-3 col-lg-3  card-group">
+                    <div class="card rounded my-3 bg-transparent py-2">
                         <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId">
-                            <div class=" card">
-                                <div class=" card-header">
-                                    <h6>@steam.ProductName</h6>
-                                </div>
-                                <img src="@Url.Content("~/images/"+ steam.Images.First().ImageName)" class="card-img-top" alt="Alternate Text" height="225" asp-append-version="true" />
-                                <div class=" card-footer">
-                                    <h5 style="color: red">@String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)</h5>
-                                </div>
-                            </div>
+                            @{<img src="@Url.Content("~/images/" + steam.Images.First().ImageName)" alt="@steam.ProductName" style="height: 150px; max-width: 90%;" class="mx-auto d-block"> }
                         </a>
+                        <h6 class="card-body">
+                            <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId" class="card-link">
+                                @steam.ProductName
+                            </a>
+                        </h6>
+                        <h6 class="card-footer text-center text-danger bg-transparent">
+                            @String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)
+                        </h6>
                     </div>
                 </div>
-
-
             }
+        </div>
+        <div>
+            <p class=" text-success">  Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+            @Html.PagedListPager(Model, page => Url.Action($"ShowFan", new { page }))
         </div>
     </div>
 
-    <div class=" col-2 bg-white">
+    <div class=" col-3 bg-white">
         <br /><br />
-        <form class="border container bg-blue">
-            <h5>Lọc sản phẩm</h5>
-            <p>Theo hãng:</p>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="Daikiosan">
-                <label class="form-check-label" for="Daikiosan">
-                    <img width="70" src="~/images/thuonghieu/Daikiosan7498-s_32.png" />
-                </label>
+        <form asp-controller="Home" asp-action="LocSanPham" method="post" enctype="multipart/form-data" class="form-group">
+            <div class="list-group-item">
+                <h5 class="bg-secondary rounded text-light py-2 text-center">Lọc sản phẩm <i class="fas fa-search"></i></h5>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="Kangaroo">
-                <label class="form-check-label" for="Kangaroo">
-                    <img width="70" src="~/images/thuonghieu/Kangaroo7498-s_52.png" />
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="Sunhouse">
-                <label class="form-check-label" for="Sunhouse">
-                    <img width="70" src="~/images/thuonghieu/Sunhouse7498-s_18.png" />
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="Delites">
-                <label class="form-check-label" for="Delites">
-                    <img height="25" src="~/images/thuonghieu/Delites7498-s_34.png" />
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="Midea">
-                <label class="form-check-label" for="Midea">
-                    <img height="25" src="~/images/thuonghieu/Midea7498-s_36.png" />
-                </label>
-            </div>
-            <br />
-            <p>Theo giá:</p>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">
-                    Từ 1-4 triệu
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">
-                    Từ 4-8 triệu
+            <div class="list-group-item">
+                <select name="categoryId" class="custom-select form-control" id="categoryId">
+                    <option>Chọn danh mục</option>
 
-                </label>
+                    @foreach (var ctg in context.Categories)
+                    {
+                        <option value="@ctg.CategoryId">@ctg.CategoryName</option>
+                    }
+
+                </select>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">
-                    Trên 8 triệu
-                </label>
+            <div class="list-group-item">
+                <select name="brandId" class="custom-select form-control" id="brandId">
+                    <option>Chọn thương hiệu</option>
+
+                    @foreach (var brand in context.Brands)
+                    {
+                        <option value="@brand.BrandId">@brand.BrandName</option>
+                    }
+
+                </select>
+            </div>
+
+            <div class="list-group-item">
+                <select name="price" class="custom-select form-control" id="categoryId">
+                    <option>Chọn mức giá</option>
+                    <option value="1">Từ 1-4 triệu</option>
+                    <option value="2">Từ 4-8 triệu</option>
+                    <option value="3">Trên 8 triệu</option>
+
+
+                </select>
+            </div>
+            <div class="list-group-item">
+                <select name="sortByPrice" class="custom-select form-control" id="sortByPrice">
+                    <option>Sắp xếp theo giá</option>
+                    <option value="1">Tăng dần</option>
+                    <option value="2">Giảm dần</option>
+                </select>
+            </div>
+            <div class="list-group-item text-center">
+                <input class="btn btn-primary" type="submit" value="Tìm kiếm" />
             </div>
         </form>
     </div>
 </div>
+<style>
+    .pagination > li {
+        border: 1px solid #000000;
+        padding: 0 10px !important;
+        margin-right: 1px;
+    }
+</style>

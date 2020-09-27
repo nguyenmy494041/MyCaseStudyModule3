@@ -1,0 +1,26 @@
+﻿@model Order
+@{
+    ViewBag.Title = "Thêm mới sản phẩm";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+<div class="col-8 ">
+    <h3 class=" text-danger">Xem chi tiết đơn hàng</h3>
+    <p><b>Mã đơn hàng</b>: @Model.OrderId</p>
+    <p><b>Tên khách hàng</b>: @Model.Fullname</p>
+    <p><b>Địa chỉ giao hàng</b>: @Model.Adress, @Model.PhuongXa.TenDayDu, @Model.PhuongXa.QuanHuyen.TenDayDu, @Model.PhuongXa.QuanHuyen.TinhThanh.TenDayDu</p>
+    <p><b>Số điện thoại</b>: @Model.SoDienThoai</p>
+    <p><b>Sản phẩm đặt mua</b>: @Model.ProductName</p>
+    <p><b>Giá sản phẩm</b>: @String.Format(info, "{0:#,##0 đ}", Model.ProductPrice)</p>
+    <p><b>Số lượng đặt mua</b>: @Model.Soluong</p>
+    <p><b>Thời điểm đặt hàng</b>: @Model.ThoiDiemDatHang.ToString("dd-MM-yyyy  hh:mm:ss")</p>
+    <p><b>Tổng tiền thanh toán</b>: @String.Format(info, "{0:#,##0 đ}", Model.Total)</p>
+    <p><b>Trạng thái</b>: @Model.State.StateName</p>
+    <br />
+    <div class="row">
+
+        <a asp-controller="Order" asp-action="OrderShowAdmin" class="col-4 btn btn-success btn-lg btn-block my-3 mx-auto">Trở về</a>
+
+    </div>
+</div>

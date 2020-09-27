@@ -10,7 +10,7 @@
   
     }
 
-}
+
 
 <h2 class="card-title text-center mt-2">Đặt hàng sản phẩm: @product.ProductName</h2>
 
@@ -109,7 +109,7 @@
 
             <div class="row">
                 <button class="col-4 btn btn-primary btn-block text-uppercase my-3 mx-auto" type="submit">Xác nhận</button>
-                <a asp-controller="Home" asp-action="Detail" class="col-4 btn btn-secondary btn-lg btn-block my-3 mx-auto">Huỷ</a>
+                <a asp-controller="Home" asp-action="Detail" asp-route-id="@product.ProductId" class="col-4 btn btn-secondary btn-lg btn-block my-3 mx-auto">Huỷ</a>
             </div>
         </form>
       

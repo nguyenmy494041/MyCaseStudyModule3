@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Product>
 @{
     ViewData["Title"] = "ShowFilter";
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
@@ -15,7 +15,7 @@
             <th>Tên sản phẩm </th>
             <th>Giá sản phẩm</th>
             <th>Công suất</th>
-            <th>Thời gian đun nóng </th>
+            <th>Hình sản phẩm </th>
             <th>Thao tác </th>
 
         </tr>
@@ -31,28 +31,38 @@
                 <td>@item.ProductName</td>
                 <td>@item.ProductPrice</td>
                 <td>@item.Wattage W</td>
-                <td>@item.Specification.WarmUpTime</td>
                 <td>
-                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#gia-@item.ProductPrice">
-                        Delete
-                    </button>
-                    <div class="modal" id="gia-@item.ProductPrice">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header ">
-                                    <h2 class="modal-title" style="margin: auto;color: red">Xóa thương hiệu</h2>
-                                </div>
-                                <div class="modal-body">
-                                    <h6> Are you sure you want to delete Role "@item.ProductName" ?</h6>
-                                </div>
-                                <div class="modal-footer">
-                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-danger">Yes</a>
-                                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                    @if (item.Images == null || item.Images.Count == 0)
+                    {
+                        <div> Chưa có hình sản phẩm</div>
+                    }
+                    else
+                    {
+                <img width="100" src="~/images/@item.Images.ToList()[0].ImageName" />
+                    }
+                </td>
+                <td>
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0)" class="text-danger" onclick="bottle.delete('@item.ProductId')"><i class="fa fa-trash"></i></a>
+                    @*<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#gia-@item.ProductPrice">
+                            Delete
+                        </button>
+                        <div class="modal" id="gia-@item.ProductPrice">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header ">
+                                        <h2 class="modal-title" style="margin: auto;color: red">Xóa thương hiệu</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6> Are you sure you want to delete Role "@item.ProductName" ?</h6>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-danger">Yes</a>
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>*@
                 </td>
 
             </tr>
@@ -67,17 +77,19 @@
     <script>
         $(document).ready(function () {
             $('#dataTable').dataTable(
-                //{
-                //    "columnDefs": [
-                //        {
-                //            "targets": 7,
-                //            "orderable": false
-                //        },
+                {
+                    "columnDefs": [
+                        {
+                            "targets": 7,
+                            "orderable": false
+                        },
 
-                //    ]
-                //}
+                    ]
+                }
             );
         });
     </script>
+    <script src="~/lib/bootbox/bootbox.js"></script>
+    <script src="~/js/deletebottle.js"></script>
 }
 

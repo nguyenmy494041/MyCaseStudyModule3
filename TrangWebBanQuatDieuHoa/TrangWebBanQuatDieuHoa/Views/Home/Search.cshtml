@@ -1,116 +1,121 @@
-﻿@model List<Product>
-@{ 
-    ViewBag.Title = "tìm kiếm sản phẩm";
-    const int fanId = 1;
-    const int bottleId = 3;
-    const int filterId = 2;
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@model IPagedList<Product>
+@inject AppDbContext context
+@{
+    ViewBag.Title = "tìm kiếm sản phẩm";   
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var search = ViewBag.search as State;
 }
-<div>
-    @if (Model.Count > 0)
-    {
-        <div class="row ">
-            <div class="col-10 bg-white">
-                @*<h2>Quạt hơi nước</h2>*@
 
-                <div class=" row">
-                    @foreach (var steam in Model)
+<div class="row my-3">
+    <div class="col-lg-3">
+
+        <form asp-controller="Home" asp-action="LocSanPham" method="post" enctype="multipart/form-data" class="form-group">
+            <div class="list-group-item">
+                <h5 class="bg-secondary rounded text-light py-2 text-center">Lọc sản phẩm <i class="fas fa-search"></i></h5>
+            </div>
+            <div class="list-group-item">
+                <select name="categoryId" class="custom-select form-control" id="categoryId">
+                    <option>Chọn danh mục</option>
+
+                    @foreach (var ctg in context.Categories)
                     {
-                        if (steam.CategoryId == fanId)
+                        <option value="@ctg.CategoryId">@ctg.CategoryName</option>
+                    }
+
+                </select>
+            </div>
+            <div class="list-group-item">
+                <select name="brandId" class="custom-select form-control" id="brandId">
+                    <option>Chọn thương hiệu</option>
+
+                    @foreach (var brand in context.Brands)
+                    {
+                        <option value="@brand.BrandId">@brand.BrandName</option>
+                    }
+
+                </select>
+            </div>
+
+            <div class="list-group-item">
+                <select name="price" class="custom-select form-control" id="categoryId">
+                    <option>Chọn mức giá</option>
+                    <option value="1">Từ 1-4 triệu</option>
+                    <option value="2">Từ 4-8 triệu</option>
+                    <option value="3">Trên 8 triệu</option>
+
+
+                </select>
+            </div>
+            <div class="list-group-item">
+                <select name="sortByPrice" class="custom-select form-control" id="sortByPrice">
+                    <option>Sắp xếp theo giá</option>
+                    <option value="1">Tăng dần</option>
+                    <option value="2">Giảm dần</option>
+                </select>
+            </div>
+            <div class="list-group-item text-center">
+                <input class="btn btn-primary" type="submit" value="Tìm kiếm" />
+            </div>
+        </form>
+    </div>
+
+
+    <div class="col-lg-9">
+        @if (Model.Count > 0)
+        {
+            <h4 class=" text-danger"> Các sản phẩm tìm thấy</h4>
+            <div class="row ">
+                <div class="col-12 bg-white">
+
+                    <div class=" row">
+                        @foreach (var steam in Model)
                         {
 
-                            <div class=" col-sm-3">
-
-                                <div class=" card my-3 text-center">
+                            <div class="col-md-3 col-lg-3 card-group">
+                                <div class="card rounded my-3 bg-transparent py-2">
                                     <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId">
-                                        <div class=" card">
-                                            <div class=" card-header">
-                                                <h6>@steam.ProductName</h6>
-                                            </div>
-                                            <img src="@Url.Content("~/images/"+ steam.Images.First().ImageName)" class="card-img-top" alt="Alternate Text" height="225" asp-append-version="true" />
-                                            <div class=" card-footer">
-                                                <h5 style="color: red">@String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)</h5>
-                                            </div>
-                                        </div>
+                                        @{
+
+                                            <img src="@Url.Content("~/images/"+ steam.Images.First().ImageName)" alt="@steam.ProductName" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
+
+                                        }
                                     </a>
+                                    <h6 class="card-body">
+                                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId" class="card-link">
+                                            @steam.ProductName
+                                        </a>
+                                    </h6>
+                                    <h6 class="card-footer text-center text-danger bg-transparent">
+                                        @String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)
+                                    </h6>
                                 </div>
                             </div>
-
                         }
-
-
-                    }
-                </div>
-                <br />
-                @*<h2>Lọc nước</h2>*@
-
-                <div class=" row">
-                    @foreach (var steam in Model)
-                    {
-                        if (steam.CategoryId == filterId)
-                        {
-
-                            <div class=" col-sm-3">
-
-                                <div class=" card my-3 text-center">
-                                    <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId">
-                                        <div class=" card">
-                                            <div class=" card-header">
-                                                <h6>@steam.ProductName</h6>
-                                            </div>
-                                            <img src="@Url.Content("~/images/"+ steam.Images.First().ImageName)" class="card-img-top" alt="Alternate Text" height="225" asp-append-version="true" />
-                                            <div class=" card-footer">
-                                                <h5 style="color: red">@String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)</h5>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-                        }
-
-
-                    }
-                </div>
-
-                <br />
-                @*<h2>Bình nóng lạnh</h2>*@
-
-                <div class=" row">
-                    @foreach (var steam in Model)
-                    {
-                        if (steam.CategoryId == bottleId)
-                        {
-
-                            <div class=" col-sm-3">
-
-                                <div class=" card my-3 text-center">
-                                    <a asp-controller="Home" asp-action="Detail" asp-route-id="@steam.ProductId">
-                                        <div class=" card">
-                                            <div class=" card-header">
-                                                <h6>@steam.ProductName</h6>
-                                            </div>
-                                            <img src="@Url.Content("~/images/"+ steam.Images.First().ImageName)" class="card-img-top" alt="Alternate Text" height="225" asp-append-version="true" />
-                                            <div class=" card-footer">
-                                                <h5 style="color: red">@String.Format(info, "{0:#,##0 đ}", steam.ProductPrice)</h5>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-                        }
-
-
-                    }
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-    else
-    {
-        <p>Không tìm thấy sản phẩm phù hợp</p>
-        <a asp-controller="Home" asp-action=" Show" class="btn btn-success"> Trở về</a>
-    }
+            <div>
+                <p class=" text-success">  Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+                @Html.PagedListPager(Model, page => Url.Action($"Search", new {Search = search.StateName, page }))
+            </div>
+        }
+        else
+        {
+            <h3 class=" text-danger">Không tìm thấy sản phẩm phù hợp</h3>
+            <a asp-controller="Home" asp-action="Show" class="btn btn-success"> Trở về</a>
+        }
 
+    </div>
 </div>
+
+
+<style>
+    .pagination > li {
+        border: 1px solid #000000;
+        padding: 0 10px !important;
+        margin-right: 1px;
+    }
+</style>
