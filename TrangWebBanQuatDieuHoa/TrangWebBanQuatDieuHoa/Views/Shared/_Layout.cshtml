@@ -17,8 +17,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CuaHangQuatNuoc</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    @*https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css*@
+
     <link href="~/lib/datatable/css/dataTables.bootstrap4.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -26,7 +29,7 @@
     <header>
         <span class="d-block p-2 bg-info text-white container"></span>
         <nav class="navbar navbar-expand-lg navbar-light bg-warning container mb-2">
-           <img width="50" height="50" src="~/images/anh/qr7f_logo kingmedia website.png" />
+            <img width="50" height="50" src="~/images/anh/qr7f_logo kingmedia website.png" />
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -54,7 +57,7 @@
                     <li class="nav-item active">
                         <form asp-controller="Home" asp-action="Search" method="post" enctype="multipart/form-data" class="form-inline my-2 my-lg-0 mr-5 ">
                             <input id="timkiem" class="form-control mr-sm-2" type="text" name="Search" placeholder="Sản phẩm cần tìm" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>                           
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
                     </li>
                 </ul>
@@ -89,12 +92,12 @@
                             <a class="nav-link" asp-controller="Account" asp-action="Login">Đăng nhập<span class="sr-only">(current)</span></a>
                         </li>
                         @*<li style="margin-left:auto" class="nav-item"><a asp-controller="Account" asp-action="Login" class="nav-link">Login</a></li>
-                <li style="margin-left:auto" class="nav-item"><a asp-controller="Account" asp-action="Register" class="nav-link">Sign Up</a></li>*@
+                            <li style="margin-left:auto" class="nav-item"><a asp-controller="Account" asp-action="Register" class="nav-link">Sign Up</a></li>*@
                     }
                 </ul>
                 <!--<form asp-controller="Home" asp-action="Search" method="post" enctype="multipart/form-data" class="form-inline my-2 my-lg-0 mr-5 ">
-    <input id="timkiem" class="form-control mr-sm-2" type="text" name="Search" placeholder="Sản phẩm cần tìm" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+                <input id="timkiem" class="form-control mr-sm-2" type="text" name="Search" placeholder="Sản phẩm cần tìm" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
                 @*<a  >Tìm kiếm</a>*@
                 <!--</form>-->
 
@@ -118,7 +121,8 @@
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    <script src="~/lib/font-awesome/js/all.js"></script>
+    https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js
+
     <script src="~/lib/datatablenet/jquery.dataTables.js"></script>
 
     @RenderSection("Scripts", required: false)

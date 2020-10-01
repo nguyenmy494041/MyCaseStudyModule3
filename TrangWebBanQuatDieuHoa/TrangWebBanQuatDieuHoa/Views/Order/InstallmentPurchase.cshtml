@@ -1,0 +1,159 @@
+﻿@model TrangWebBanQuatDieuHoa.Models.ViewModel.Ordermodel
+@inject AppDbContext context
+
+@{
+    ViewBag.Title = "Đặt hàng";
+    //Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+    var cactinh = ViewBag.cactinh as List<TinhThanh>;
+    var product = ViewBag.Product as Product;
+    var image = product.Images.ToList();
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+
+
+<h2 class="card-title text-center mt-2">Đặt hàng sản phẩm: @product.ProductName</h2>
+
+<div class="row">
+
+    <div class=" col-3">
+        <br />
+        <img width=" 250" src="~/images/@image[0].ImageName" /><br />
+        <hr />
+        <img width=" 250" src="~/images/@image[1].ImageName" />
+    </div>
+    <div class="col-8">
+
+        <form class="form-signin" enctype="multipart/form-data" asp-controller="Order" asp-action="InstallmentPurchase" method="post">
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+            <h4 class="mb-3">Thông tin khách hàng</h4>
+
+            <div class="form-group">
+                <label asp-for="Fullname"></label>
+                <input asp-for=" Fullname" class="form-control" placeholder="Tên khách hàng">
+                <span asp-validation-for="Fullname" class="text-danger"></span>
+            </div>
+            <div class=" row">
+                <div class="form-group col-6">
+                    <label asp-for="Adress"></label>
+                    <input asp-for=" Adress" class="form-control" placeholder="Số nhà, tên đường">
+                    <span asp-validation-for="Adress" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="SoDienThoai"></label>
+                    <input type="number" asp-for=" SoDienThoai" class="form-control" placeholder="Số điện thoại">
+                    <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class=" row">
+                <div class="col-4">
+                    <div>
+                        <label asp-for=" TinhThanhId">Tỉnh thành</label>
+                    </div>
+                    <div class=" col-">
+                        <select asp-for=" TinhThanhId" asp-items="@(new SelectList(cactinh, "TinhThanhId", "TenDayDu"))"
+                                class="custom-select" onchange="dangky.thaydoitinhthanh(this.value)">
+                            <option value="">-Chọn-</option>
+
+                        </select>
+                        <span asp-validation-for=" TinhThanhId" class=" text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div>
+                        <label asp-for=" QuanHuyenId">Quận/Huyện</label>
+                    </div>
+                    <div class=" col-">
+                        <select asp-for=" QuanHuyenId" class="custom-select" onchange="dangky.thaydoiquanhuyen(this.value)">
+                            <option>-Chọn-</option>
+                        </select>
+                        <span asp-validation-for=" QuanHuyenId" class=" text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div>
+                        <label asp-for=" PhuongXaId">Phường/Xã</label>
+                    </div>
+                    <div class=" col-">
+                        <select asp-for=" PhuongXaId" class="custom-select">
+                            <option>-Chọn-</option>
+                        </select>
+                        <span asp-validation-for=" PhuongXaId" class=" text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <h4 class="mb-3">Thông tin sản phẩm</h4>
+
+            <div class=" row">
+                <div class="form-group col-7">
+                    <label asp-for="ProductName"></label>
+                    <input class=" bg-light" style="border:none" asp-for="ProductName" readonly value="@product.ProductName" />
+
+                </div>
+
+
+                <div class="form-group col-5">
+                    <label asp-for="ProductPrice"></label>
+                    <input type="hidden" class=" bg-light" style="border:none" asp-for="ProductPrice" readonly value="@product.ProductPrice" />
+                    <label>@String.Format(info, "{0:#,##0 đ}", product.ProductPrice)</label>
+                </div>
+            </div>
+            <div class="col row">
+                <div class="col col-8 form-group row">
+                    <label asp-for="Soluong"></label>
+                    <span class=" minus" onclick=" del();"> &nbsp;&nbsp;<i class=" fa fa-minus" aria-hidden="true"></i>&nbsp;&nbsp;</span>
+                    <input asp-for=" Soluong" class="form-control" value="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 1" style="height:30px; width: 60px; text-align: center">
+                    <span class=" plus" onclick=" plus();"> &nbsp;&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></span>
+                    <span asp-validation-for="Soluong" class="text-danger"></span>
+                </div>
+                <div class="form-group col-4 row">
+
+                    <label>&nbsp;&nbsp;Tổng tiền:&nbsp; </label>
+
+                    <label id="tongtien">@String.Format(info, "{0:#,##0 đ}", product.ProductPrice)</label>
+                </div>
+            </div>
+
+            <div class=" text-indigo">
+                <label>
+                    Số tiền trả trước <label class=" text-danger" id="tientragop">@String.Format(info, "{0:#,##0 đ}", (product.ProductPrice * 0.3))</label> (30%) khi nhận hàng. 
+                    Hàng tháng bạn sẽ trả góp cho cửa hàng số tiền là <label class=" text-danger" id="hangthang">@String.Format(info, "{0:#,##0 đ}", (Math.Round(product.ProductPrice * 0.7 * 1.01 / 6000, 0) * 1000))</label> 
+                    trong vòng 6 tháng kể từ thời điểm mua hàng.
+                </label>
+
+
+            </div>
+
+            <div class="row">
+                <button class="col-4 btn btn-primary btn-block text-uppercase my-3 mx-auto" type="submit">Xác nhận</button>
+                <a asp-controller="Home" asp-action="Detail" asp-route-id="@product.ProductId" class="col-4 btn btn-secondary btn-lg btn-block my-3 mx-auto">Huỷ</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/tinhthanh.js"></script>
+    <script>
+        var i = 1;
+        function plus() {
+            i++;
+            document.getElementById('Soluong').value = i;
+            $("#tongtien").html((parseInt($("#Soluong").val(), 10) * parseInt($("#ProductPrice").val(), 10)).toLocaleString('vi', { style: 'currency', currency: 'VND' }));
+            $("#tientragop").html((parseInt($("#Soluong").val(), 10) * parseInt($("#ProductPrice").val(), 10) * 0.3).toLocaleString('vi', { style: 'currency', currency: 'VND' }));
+            $("#hangthang").html((Math.round((parseInt($("#Soluong").val(), 10) * parseInt($("#ProductPrice").val(), 10) * 0.7 * 1.01 / 6000),0)*1000).toLocaleString('vi', { style: 'currency', currency: 'VND' }));
+        }
+        function del() {
+            if (i >= 2) {
+                i--;
+                document.getElementById('Soluong').value = i;
+                $("#tongtien").html((parseInt($("#Soluong").val(), 10) * parseInt($("#ProductPrice").val(), 10)).toLocaleString('vi', { style: 'currency', currency: 'VND' }));
+                $("#tientragop").html((parseInt($("#Soluong").val(), 10) * parseInt($("#ProductPrice").val(), 10)*0.3).toLocaleString('vi', { style: 'currency', currency: 'VND' }));
+                $("#hangthang").html((Math.round((parseInt($("#Soluong").val(), 10) * parseInt($("#ProductPrice").val(), 10) * 0.7 * 1.01 / 6000), 0) * 1000).toLocaleString('vi', { style: 'currency', currency: 'VND' }));
+            }
+        }
+    </script>
+}

@@ -14,7 +14,7 @@
 }
 
 @*@Html.Raw(Model.Description.Replace("\r\n", "<br />"))*@
-<em>Danh mục: @Model.Category.CategoryName</em>
+<p class=" text-success">Danh mục: @Model.Category.CategoryName</p>
 <div class=" row">
     <h2 class=" mt-4 text-info ">@Model.ProductName &nbsp;&nbsp;</h2>
     <span class="text-primary mt-4"> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
@@ -82,7 +82,8 @@
 
 
             <a asp-controller="Order" asp-action="Buy" asp-route-id="@Model.ProductId" style="line-height: 10px" class="btn btn-success btn-lg btn-block"><p><b>MUA NGAY</b><div style=" font-size:15px">Hàng chính hãng 100%</div></p></a>
-            <a style="line-height: 10px" class="btn btn-info btn-lg btn-block"><p><b>MUA TRẢ GÓP 0%</b><div style=" font-size:15px">Thủ tục đơn giản</div></p></a>
+
+            <a asp-controller="Order" asp-action="InstallmentPurchase" asp-route-id="@Model.ProductId" style="line-height: 10px" class="btn btn-info btn-lg btn-block"><p><b>MUA TRẢ GÓP 0%</b><div style=" font-size:15px">Thủ tục đơn giản</div></p></a>
             <br /><b>Gói trả góp 0% phổ biến nhất</b>
 
             <ul style="line-height: 25px">

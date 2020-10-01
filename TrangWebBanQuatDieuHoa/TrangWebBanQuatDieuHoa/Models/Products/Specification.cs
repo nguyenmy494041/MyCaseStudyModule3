@@ -45,10 +45,10 @@ namespace TrangWebBanQuatDieuHoa.Models.Products
 
         [Display(Name = "Công nghệ lọc"), MaxLength(200)]
         public string FilterTechnology { get; set; }
-
+        [Range(1, int.MaxValue, ErrorMessage = "Nhập sai số lượng!")]
         [Display(Name = "Số lượng lõi lọc")]
         public Nullable<int> NumberFilterCores { get; set; }
-
+        [Range(1, int.MaxValue, ErrorMessage = "Nhập sai số lượng!")]
         [Display(Name = "Công suất lọc nước")]
         public Nullable<int> FilterCapacity { get; set; }
 
@@ -63,13 +63,13 @@ namespace TrangWebBanQuatDieuHoa.Models.Products
         [Display(Name = "Tùy chỉnh nhiệt độ"), MaxLength(100)]
         public string Temperature { get; set; }
 
-
+        [Range(0, float.MaxValue, ErrorMessage = "Nhập sai số lượng!")]
         [Display(Name = "Áp lực nước")]
         public Nullable<float> WaterPressure { get; set; }
-
+        [Range(1, int.MaxValue, ErrorMessage = "Nhập sai số lượng!")]
         [Display(Name = "Thời gian đun nóng")]
         public Nullable<int> WarmUpTime { get; set; }
-
+        [Range(1, int.MaxValue, ErrorMessage = "Nhập sai số lượng!")]
         [Display(Name = "Nhiệt độ tối đa")]
         public Nullable<int> MaxTemperature { get; set; }
 

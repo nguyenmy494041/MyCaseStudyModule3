@@ -24,8 +24,15 @@ namespace TrangWebBanQuatDieuHoa.Models.Ordersss
         [MaxLength(200), Display(Name = "Tên sản phẩm:")]
 
         public string ProductName { get; set; }
-        
-       
+
+        [Required(ErrorMessage = "Chưa điền thông tin")]
+        [MaxLength(30), Display(Name = "Hình thức mua hàng:")]
+        public string PurchaseForm { get; set; }
+
+        [Required(ErrorMessage = "Chưa điền thông tin")]
+        [MaxLength(500), Display(Name = "Hình thức thanh toán:")]
+        public string Note { get; set; }
+
         [Required(ErrorMessage = "Chưa điền thông tin")]
         [MaxLength(100), Display(Name = "Số nhà")]
         public string Adress { get; set; }

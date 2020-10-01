@@ -16,7 +16,9 @@
     <p><b>Số lượng đặt mua</b>: @Model.Soluong</p>
     <p><b>Thời điểm đặt hàng</b>: @Model.ThoiDiemDatHang.ToString("dd-MM-yyyy  hh:mm:ss")</p>
     <p><b>Tổng tiền thanh toán</b>: @String.Format(info, "{0:#,##0 đ}", Model.Total)</p>
+    <p><b>Hình thức thanh toán</b>: @Model.PurchaseForm</p>
     <p><b>Trạng thái</b>: @Model.State.StateName</p>
+    <p>@Model.Note</p>
     <br />
     <div class="row">
 

@@ -15,12 +15,13 @@
     <p><b>Sản phẩm đặt mua</b>: @Model.ProductName</p>
     <p><b>Giá sản phẩm</b>: @String.Format(info, "{0:#,##0 đ}", Model.ProductPrice)</p>
     <p><b>Số lượng đặt mua</b>: @Model.Soluong</p>
-    <p><b>Tổng tiền thanh toán</b>:@String.Format(info, "{0:#,##0 đ}", Model.Total)</p>
-    <em>Thanh toán khi nhận hàng</em>
+    <p><b>Tổng tiền thanh toán</b>: @String.Format(info, "{0:#,##0 đ}", Model.Total)</p>
+    <p><b>Hình thức thanh toán</b>: @Model.PurchaseForm</p>
+    <em>@Model.Note</em>
     <br />
     <div class="row">
         <a asp-controller="Home" asp-action="Detail" asp-route-id="@product.ProductId" class="col-4 btn btn-success btn-lg btn-block my-3 mx-auto">Xác nhận</a>
         <a asp-controller="Order" asp-action="HuyDonHang" asp-route-id="@Model.Ma" class="col-4 btn btn-danger btn-lg btn-block my-3 mx-auto">Huỷ đơn hàng</a>
-       
+
     </div>
 </div>

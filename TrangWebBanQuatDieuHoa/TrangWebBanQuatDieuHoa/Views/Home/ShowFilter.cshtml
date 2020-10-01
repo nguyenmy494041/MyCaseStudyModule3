@@ -3,7 +3,7 @@
 @inject AppDbContext context
 @model IPagedList<Product>
 @{
-    ViewBag.Title = "Trang chủ";
+    ViewBag.Title = "Dang mục lọc nước";
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
 <img style="width: 100%" src="~/images/thuonghieu/MLN-01-1200x200.jpg" />
@@ -81,7 +81,7 @@
                 </select>
             </div>
             <div class="list-group-item text-center">
-                <input class="btn btn-primary" type="submit" value="Tìm kiếm" />
+                <input class="btn btn-primary" type="submit" value="Lọc sản phẩm" />
             </div>
         </form>
     </div>

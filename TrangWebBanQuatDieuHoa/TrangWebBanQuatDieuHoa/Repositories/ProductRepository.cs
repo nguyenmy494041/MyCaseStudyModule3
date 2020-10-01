@@ -17,14 +17,55 @@ namespace TrangWebBanQuatDieuHoa.Repositories
     {
         private readonly AppDbContext context;
         private readonly IWebHostEnvironment webHostEnvironment;
-        
+
+        private static readonly string[] VietnameseSigns = new string[]
+        {
+
+            "aAeEoOuUiIdDyY",
+
+            "áàạảãâấầậẩẫăắằặẳẵ",
+
+            "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+
+            "éèẹẻẽêếềệểễ",
+
+            "ÉÈẸẺẼÊẾỀỆỂỄ",
+
+            "óòọỏõôốồộổỗơớờợởỡ",
+
+            "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+
+            "úùụủũưứừựửữ",
+
+            "ÚÙỤỦŨƯỨỪỰỬỮ",
+
+            "íìịỉĩ",
+
+            "ÍÌỊỈĨ",
+
+            "đ",
+
+            "Đ",
+
+            "ýỳỵỷỹ",
+
+            "ÝỲỴỶỸ"
+        };
+        public static string RemoveSign4VietnameseString(string str)
+        {
+            for (int i = 1; i < VietnameseSigns.Length; i++)
+            {
+                for (int j = 0; j < VietnameseSigns[i].Length; j++)
+                    str = str.Replace(VietnameseSigns[i][j], VietnameseSigns[0][i - 1]);
+            }
+            return str;
+        }
+
         public ProductRepository(AppDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             this.context = context;
             this.webHostEnvironment = webHostEnvironment;
         }
-
-
 
         public List<Product> GetAllByCategory(int? categoryId)
         {
@@ -115,12 +156,6 @@ namespace TrangWebBanQuatDieuHoa.Repositories
             }
             return -1;
         }
-
-
-
-
-
-
 
         public Product Edit(CreateProduct editproduct, IFormFile[] ImageFiles)
         {
@@ -213,9 +248,7 @@ namespace TrangWebBanQuatDieuHoa.Repositories
             }
             return -1;
         }
-
-        
-
+                
         public CreateProduct ConvertToCreateProduct(int id)
         {
             Product edit = Get(id);
@@ -278,9 +311,19 @@ namespace TrangWebBanQuatDieuHoa.Repositories
 
         public List<Product> Search(string name)
         {
-            return context.Products.Include(e => e.Specification)
-         .Include(e => e.Images).Include(e => e.Category).Include(e => e.Brand).Where(
-             e => e.ProductName.Contains(name)).ToList();
+            List<Product> products =  context.Products.Include(e => e.Specification)
+         .Include(e => e.Images).Include(e => e.Category).Include(e => e.Brand).ToList();
+            List<Product> productsSearch = new List<Product>();
+            foreach( var item in products)
+            {
+                string nameItem = RemoveSign4VietnameseString(item.ProductName).ToLower();
+                string nameSeacrh = name.ToLower();
+                if (nameItem.Contains(nameSeacrh))
+                {
+                    productsSearch.Add(item);
+                }
+            }
+            return productsSearch;
         }
 
         public List<Product> LocSanPham(int? categoryId, int? brandId, int? price, int? sortByPrice)

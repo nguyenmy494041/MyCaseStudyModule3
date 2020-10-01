@@ -7,8 +7,8 @@
     var cactinh = ViewBag.cactinh as List<TinhThanh>;
     var product = ViewBag.Product as Product;
     var image = product.Images.ToList();
-  
-    }
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
 
 
 
@@ -23,9 +23,9 @@
         <img width=" 250" src="~/images/@image[1].ImageName" />
     </div>
     <div class="col-8">
-       
+
         <form class="form-signin" enctype="multipart/form-data" asp-controller="Order" asp-action="Buy" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
             <h4 class="mb-3">Thông tin khách hàng</h4>
 
             <div class="form-group">
@@ -96,23 +96,32 @@
 
                 <div class="form-group col-5">
                     <label asp-for="ProductPrice"></label>
-                    <input style="border:none" asp-for="ProductPrice" readonly value="@product.ProductPrice" />
+                    <input type="hidden" class=" bg-light" style="border:none" asp-for="ProductPrice" readonly value="@product.ProductPrice" />
+                    <label>@String.Format(info, "{0:#,##0 đ}", product.ProductPrice)</label>
                 </div>
             </div>
-            <div class=" col form-group row">
-                <label asp-for="Soluong"></label>
-                <span class=" minus" onclick=" del();"> &nbsp;&nbsp;<i class=" fa fa-minus" aria-hidden="true"></i>&nbsp;&nbsp;</span>
-                <input asp-for=" Soluong" class="form-control" value="1" style="height:30px; width: 60px; text-align: center">
-                <span class=" plus" onclick=" plus();"> &nbsp;&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></span>
-                <span asp-validation-for="Soluong" class="text-danger"></span>
-            </div>         
+            <div class="col row">
+                <div class="col col-8 form-group row">
+                    <label asp-for="Soluong"></label>
+                    <span class=" minus" onclick=" del();"> &nbsp;&nbsp;<i class=" fa fa-minus" aria-hidden="true"></i>&nbsp;&nbsp;</span>
+                    <input asp-for=" Soluong" class="form-control" value="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 1" style="height:30px; width: 60px; text-align: center">
+                    <span class=" plus" onclick=" plus();"> &nbsp;&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></span>
+                    <span asp-validation-for="Soluong" class="text-danger"></span>
+                </div>
+                <div class="form-group col-4 row">
+
+                    <label>&nbsp;&nbsp;Tổng tiền:&nbsp; </label>
+                  
+                    <label id="tongtien">@String.Format(info, "{0:#,##0 đ}", product.ProductPrice)</label>
+                </div>
+            </div>
 
             <div class="row">
                 <button class="col-4 btn btn-primary btn-block text-uppercase my-3 mx-auto" type="submit">Xác nhận</button>
                 <a asp-controller="Home" asp-action="Detail" asp-route-id="@product.ProductId" class="col-4 btn btn-secondary btn-lg btn-block my-3 mx-auto">Huỷ</a>
             </div>
         </form>
-      
+
     </div>
 </div>
 
@@ -123,12 +132,20 @@
         function plus() {
             i++;
             document.getElementById('Soluong').value = i;
+            $("#tongtien").html((parseInt($("#Soluong").val(), 10) * parseInt($("#ProductPrice").val(), 10)).toLocaleString('vi', { style: 'currency', currency: 'VND' }));
         }
         function del() {
             if (i >= 2) {
                 i--;
-                document.getElementById('Soluong').value = i;
+                document.getElementById('Soluong').value = i;  
+                $("#tongtien").html((parseInt($("#Soluong").val(), 10) * parseInt($("#ProductPrice").val(), 10)).toLocaleString('vi', { style: 'currency', currency: 'VND' }));
             }
         }
     </script>
+    @*<script>
+            var i = 1;
+            function plus() {
+                $("#Total").html((parseInt($("#Soluong").val(), 10) * parseLong($("#ProductPrice").val(), 10)).toLocaleString('vi', { style: 'currency', currency: 'VND' }));
+            }
+        </script>*@
 }

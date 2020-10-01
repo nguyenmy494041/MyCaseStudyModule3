@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
@@ -128,6 +128,27 @@ namespace TrangWebBanQuatDieuHoa.Controllers
                 return RedirectToAction("OrderShowAdmin", "Order");
             }
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult InstallmentPurchase(int id)
+        {
+            ViewBag.cactinh = orderRepository.GetTinhThanh();
+            ViewBag.Product = productRepository.Get(id);           
+            return View();
+        }
+        [HttpPost]
+        public IActionResult InstallmentPurchase(Ordermodel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var order = orderRepository.InstallmentPurchase(model);
+                if (order != null)
+                {
+                    return RedirectToAction("OrderDetail", new { id = order.OrderId });
+                }
+            }
+            return RedirectToAction("Detail", "Home");
         }
     }
 }

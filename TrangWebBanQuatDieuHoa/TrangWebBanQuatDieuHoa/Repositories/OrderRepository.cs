@@ -35,6 +35,8 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                     PhuongXaId = model.PhuongXaId,
                     SoDienThoai = model.SoDienThoai,
                     Soluong = model.Soluong,
+                    PurchaseForm = "Thanh toán đủ",
+                    Note = "Miễn phí giao hàng. Thanh toán đầy đủ khi nhận hàng",
                     StateId = 1,
                     ThoiDiemDatHang = DateTime.Now,
                     Total=model.Soluong * model.ProductPrice,                
@@ -64,7 +66,9 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                          ProductName = o.ProductName,
                          ProductPrice=o.ProductPrice,
                          Soluong=o.Soluong,
-                         Total= o.Total                        
+                         Total= o.Total,
+                         PurchaseForm = o.PurchaseForm,
+                         Note=o.Note
 
                       }));
             return result.FirstOrDefault(ep => ep.Ma == id);
@@ -137,7 +141,7 @@ namespace TrangWebBanQuatDieuHoa.Repositories
 
         public List<Order> LayDanhSachDonHang(string number)
         {
-            return context.Order.Include(e => e.PhuongXa).Include(e => e.PhuongXa.QuanHuyen).Include(e => e.PhuongXa.QuanHuyen.TinhThanh).Include(e => e.State).Where(e => e.SoDienThoai == number).ToList();
+            return context.Order.Include(e => e.PhuongXa).Include(e => e.PhuongXa.QuanHuyen).Include(e => e.PhuongXa.QuanHuyen.TinhThanh).Include(e => e.State).Where(e => e.SoDienThoai == number).OrderByDescending(e=>e.OrderId).ToList();
         }
 
         public Order XacNhanGiaoHang(int orderId)
@@ -155,6 +159,39 @@ namespace TrangWebBanQuatDieuHoa.Repositories
         {
             var dat = context.Order.Include(e => e.PhuongXa).Include(e => e.PhuongXa.QuanHuyen).Include(e => e.PhuongXa.QuanHuyen.TinhThanh).Include(e => e.State).Where(e => e.StateId == 2).ToList();
             return dat;
+        }
+
+        public Order InstallmentPurchase(Ordermodel model)
+        {
+            if (model != null)
+            {
+                var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                var oder = new Order()
+                {                     
+                    Fullname = model.Fullname,
+                    ProductName = model.ProductName,
+                    ProductPrice = model.ProductPrice,
+                    Adress = model.Adress,
+                    ThoiDiemDatHang = DateTime.Now,
+                    TinhThanhId = model.TinhThanhId,
+                    QuanHuyenId = model.QuanHuyenId,
+                    PhuongXaId = model.PhuongXaId,
+                    SoDienThoai = model.SoDienThoai,
+                    Soluong = model.Soluong,
+                    PurchaseForm = "Thanh toán trả góp",
+                    Note = $"Miễn phí giao hàng. Thanh toán trước 30%({String.Format(info, "{0:#,##0 đ}", Math.Round((model.ProductPrice * model.Soluong * 0.3) / 1000, 0) * 1000)}) khi nhận " +
+                           $"hàng. Mỗi tháng trả góp {String.Format(info, "{0:#,##0 đ}", Math.Round((model.ProductPrice * model.Soluong * 0.7 * 1.01 / 6) / 1000, 0) * 1000)} vào " +
+                           $"ngày {DateTime.Now.ToString("dd")} hàng tháng trong vòng 6 tháng tính từ thời điểm mua hàng",
+                    StateId = 1,
+                   
+                    Total = model.Soluong * model.ProductPrice,
+                };
+
+                context.Order.Add(oder);
+                context.SaveChanges();
+                return oder;
+            }
+            return null;
         }
     }
 }

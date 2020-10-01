@@ -23,7 +23,7 @@ namespace TrangWebBanQuatDieuHoa.Models.Products
 
 
         [Required(ErrorMessage = "Chưa điền giá sản phẩm")]
-        [Display(Name = "Giá sản phẩm"), MaxLength(20)]
+        [Display(Name = "Giá sản phẩm")]
         public long ProductPrice { get; set; }
 
         [Required(ErrorMessage = "Chưa điền thông số kích thước")]

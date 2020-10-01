@@ -39,13 +39,15 @@
 
 
             <td>
-                <a asp-controller="Order" asp-action="XemChiTietDonHang" asp-route-id="@item.OrderId" class=" btn btn-danger">Chi tiết</a>
-                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal-@item.OrderId">
-                    Xác nhận
-                </button>
-                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#my-@item.OrderId">
-                    Hủy đơn
-                </button>
+                <div class=" row">
+                    <a style="margin:2px 2px" asp-controller="Order" asp-action="XemChiTietDonHang" asp-route-id="@item.OrderId" class=" btn btn-outline-success">Chi tiết</a>
+                    <button style="margin:2px 2px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal-@item.OrderId">
+                        Xác nhận
+                    </button>
+                    <button style="margin:2px 2px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#my-@item.OrderId">
+                        Hủy đơn
+                    </button>
+                </div>
                 <div class="modal" id="myModal-@item.OrderId">
                     <div class="modal-dialog">
                         <div class="modal-content">

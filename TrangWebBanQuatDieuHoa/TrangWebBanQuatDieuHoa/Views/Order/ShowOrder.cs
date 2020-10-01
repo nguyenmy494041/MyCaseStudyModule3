@@ -15,5 +15,8 @@ namespace TrangWebBanQuatDieuHoa.Views.Order
         public long ProductPrice { get; set; }
         public int Soluong { get; set; }
         public long Total { get; set; }
+        public string PurchaseForm { get; set; }
+        public string Note { get; set; }
+
     }
 }

@@ -87,7 +87,8 @@ namespace TrangWebBanQuatDieuHoa.Controllers
             return View(result);
         }
 
-        public IActionResult LocSanPham(int? categoryId, int? brandId, int? price, int? sortByPrice,int? page)
+
+        public IActionResult LocSanPham(int? categoryId, int? brandId, int? price, int? sortByPrice, int? page)
         {
             int pageSize = 8;
             int pageNumber = (page ?? 1);
@@ -100,7 +101,17 @@ namespace TrangWebBanQuatDieuHoa.Controllers
         {
             return View();
         }
-        
+
+        [Route("/Home/Loc/{categoryId}/{brandId}/{price}/{sortByPrice}")]
+        [HttpGet]
+        public JsonResult Loc(int? categoryId, int? brandId, int? price, int? sortByPrice, int? page)
+        {
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            ViewBag.search = new LocSanPham() { brandId = brandId, categoryId = categoryId, price = price, sortByPrice = sortByPrice };
+            var products = productRepository.LocSanPham(categoryId, brandId, price, sortByPrice).ToPagedList(pageNumber, pageSize);
+            return Json(new { products });
+        }
     }
 
 }

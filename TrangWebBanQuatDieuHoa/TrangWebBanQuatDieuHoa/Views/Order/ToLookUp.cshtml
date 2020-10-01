@@ -10,20 +10,22 @@
 {
     @foreach (var item in Model)
     {
-        <div class="col-8 ">
-            <h3 class=" text-danger">Xem chi tiết đơn hàng</h3>
-            <p><b>Mã đơn hàng</b>: @item.OrderId</p>
-            <p><b>Tên khách hàng</b>: @item.Fullname</p>
-            <p><b>Địa chỉ giao hàng</b>: @item.Adress, @item.PhuongXa.TenDayDu, @item.PhuongXa.QuanHuyen.TenDayDu, @item.PhuongXa.QuanHuyen.TinhThanh.TenDayDu</p>
-            <p><b>Số điện thoại</b>: @item.SoDienThoai</p>
-            <p><b>Sản phẩm đặt mua</b>: @item.ProductName</p>
-            <p><b>Giá sản phẩm</b>: @String.Format(info, "{0:#,##0 đ}", item.ProductPrice)</p>
-            <p><b>Số lượng đặt mua</b>: @item.Soluong</p>
-            <p><b>Thời điểm đặt hàng</b>: @item.ThoiDiemDatHang.ToString("dd-MM-yyyy  hh:mm:ss")</p>
-            <p><b>Tổng tiền thanh toán</b>: @String.Format(info, "{0:#,##0 đ}", item.Total)</p>
-            <p><b>Trạng thái</b>: @item.State.StateName</p>
+<div class="col-8 ">
+    <h3 class=" text-danger">Xem chi tiết đơn hàng</h3>
+    <p><b>Mã đơn hàng</b>: @item.OrderId</p>
+    <p><b>Tên khách hàng</b>: @item.Fullname</p>
+    <p><b>Địa chỉ giao hàng</b>: @item.Adress, @item.PhuongXa.TenDayDu, @item.PhuongXa.QuanHuyen.TenDayDu, @item.PhuongXa.QuanHuyen.TinhThanh.TenDayDu</p>
+    <p><b>Số điện thoại</b>: @item.SoDienThoai</p>
+    <p><b>Sản phẩm đặt mua</b>: @item.ProductName</p>
+    <p><b>Giá sản phẩm</b>: @String.Format(info, "{0:#,##0 đ}", item.ProductPrice)</p>
+    <p><b>Số lượng đặt mua</b>: @item.Soluong</p>
+    <p><b>Thời điểm đặt hàng</b>: @item.ThoiDiemDatHang.ToString("dd-MM-yyyy  hh:mm:ss")</p>
+    <p><b>Hình thức thanh toán</b>: @item.PurchaseForm</p>
+    <p><b>Tổng tiền thanh toán</b>: @String.Format(info, "{0:#,##0 đ}", item.Total)</p>
+    <p><b>Trạng thái</b>: @item.State.StateName</p>
+    <p>@item.Note</p>
 
-        </div>
+</div>
         <hr />
     }
 }

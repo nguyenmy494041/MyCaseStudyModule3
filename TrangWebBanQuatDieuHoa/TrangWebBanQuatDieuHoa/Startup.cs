@@ -1,15 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 using TrangWebBanQuatDieuHoa.Models;
+using TrangWebBanQuatDieuHoa.Models.Userss;
 using TrangWebBanQuatDieuHoa.Repositories;
 using TrangWebBanQuatDieuHoa.Services;
 
@@ -28,13 +33,18 @@ namespace TrangWebBanQuatDieuHoa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("EmployeeDbConnection")));
             services.AddControllersWithViews();
             services.AddScoped<IBrandRepository,BrandRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
         }
 
@@ -53,7 +63,7 @@ namespace TrangWebBanQuatDieuHoa
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -62,7 +72,7 @@ namespace TrangWebBanQuatDieuHoa
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Show}/{id?}");
             });
         }
     }

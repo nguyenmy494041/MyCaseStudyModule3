@@ -3,7 +3,7 @@
 @model IPagedList<Product>
 @inject AppDbContext context
 @{
-    ViewBag.Title = "Trang chủ";
+    ViewBag.Title = "Danh mục quạt điều hòa";
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
 
@@ -88,7 +88,7 @@
                 </select>
             </div>
             <div class="list-group-item text-center">
-                <input class="btn btn-primary" type="submit" value="Tìm kiếm" />
+                <input class="btn btn-primary" type="submit" value="Lọc sản phẩm" />
             </div>
         </form>
     </div>

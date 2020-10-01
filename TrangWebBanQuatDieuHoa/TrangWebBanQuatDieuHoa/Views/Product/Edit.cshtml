@@ -8,7 +8,7 @@
 
 <div class="card bg-light">
     <article class="card-body">
-        <h1 class="card-title mt-3 text-center" style="color:red">Thêm mới sản phẩm</h1>
+        <h1 class="card-title mt-3 text-center" style="color:red">Thay đổi thông tin sản phẩm</h1>
         <hr /> <br />
                <form asp-controller="Product" asp-action="Edit" method="post" class=" mt-6" autocomplete="off" enctype="multipart/form-data">
                    <div asp-validation-summary="All"></div>
@@ -26,36 +26,7 @@
                        </div>
                    </div>
 
-                   <div class=" row">
-                       @*<div class="col-sm-6 ">
-                           <div class="input-group mb-4">
-                               <div class="input-group-prepend" style=" width:40%">
-                                   <label class="input-group-text" style=" width:100%" asp-for="BrandId  "></label>
-                               </div>
-                               <div style=" width:60%">
-                                   <select asp-for="BrandId" class="custom-select">
-                                       <option value="" selected>Chọn Hãng</option>
-                                       @foreach (var item in context.Brands)
-                                       {
-                                           <option value="@item.BrandId">@item.BrandName</option>
-                                       }
-                                   </select>
-                               </div>
-                               <span asp-validation-for="BrandId" class=" text-danger"></span>
-                           </div>
-                       </div>*@
-                       @*<div class="col-sm-6 ">
-                <div class="input-group mb-4 ">
-                    <div class="input-group-prepend" style=" width:40%">
-                        <label class="input-group-text" style=" width:100%" asp-for="ProductCode"></label>
-                    </div>
-                    <div style=" width:60%">
-                        <input class="form-control" asp-for="ProductCode">
-                    </div>
-                    <span asp-validation-for=" ProductCode" class=" text-danger"></span>
-                    <em class=" text-danger"> @ViewData["Message"]</em>
-                </div>
-            </div>*@
+                   <div class=" row">                     
 
                        <div class="col-sm-6 ">
                            <div class="input-group mb-4">
@@ -68,44 +39,7 @@
                                <span asp-validation-for=" ProductPrice" class=" text-danger"></span>
                            </div>
                        </div>
-                   </div>
-
-                   <div class=" row">
-                       @*<div class="col-sm-6 ">
-                <div class="input-group mb-4 ">
-                    <div class="input-group-prepend" style=" width:40%">
-                        <label class="input-group-text" style=" width:100%" asp-for="CategoryId"></label>
-                    </div>
-                    <div style=" width:60%">
-                        <select asp-for="CategoryId" class="custom-select" onchange="themoi(this.value)">
-                            <option value="" selected>Chọn sản phẩm</option>
-                            @foreach (var item in context.Categories)
-                            {
-                                <option value="@item.CategoryId">@item.CategoryName</option>
-                            }
-                        </select>
-                    </div>
-                    <span asp-validation-for=" CategoryId  " class=" text-danger"></span>
-                </div>
-            </div>*@
-                       @*<div class="col-sm-6 ">
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend" style=" width:40%">
-                        <label class="input-group-text" style=" width:100%" asp-for="BrandId  "></label>
-                    </div>
-                    <div style=" width:60%">
-                        <select asp-for="BrandId" class="custom-select">
-                            <option value="" selected>Chọn Hãng</option>
-                            @foreach (var item in context.Brands)
-                            {
-                                <option value="@item.BrandId">@item.BrandName</option>
-                            }
-                        </select>
-                    </div>
-                    <span asp-validation-for="BrandId" class=" text-danger"></span>
-                </div>
-            </div>*@
-                   </div>
+                   </div>                 
 
                    <div class=" row">
                        <div class="col-sm-6 ">
@@ -157,14 +91,7 @@
                                <span asp-validation-for=" Year " class=" text-danger"></span>
                            </div>
                        </div>
-                   </div>
-
-
-                   @*hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh*@
-
-
-
-                   @*<div id="quathoinuoc">*@
+                   </div>               
 
                    @if (Model.CategoryId == 1)
                    {
@@ -289,11 +216,8 @@
                                </div>
                            </div>
                        </div>
-                       @*</div>*@
-
+                    
                    }
-
-
 
                    @if (Model.CategoryId == 2)
                    {
@@ -370,8 +294,6 @@
                            </div>
                        </div>
                    }
-
-
 
                    @if (Model.CategoryId == 3)
                    {

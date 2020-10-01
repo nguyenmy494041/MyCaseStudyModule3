@@ -28,7 +28,6 @@ namespace TrangWebBanQuatDieuHoa.Repositories
         Order XacNhanGiaoHang(int orderId);
 
         List<Order> DonHangDaGiao();
-
-        
+        Order InstallmentPurchase(Ordermodel model);
     }
 }
