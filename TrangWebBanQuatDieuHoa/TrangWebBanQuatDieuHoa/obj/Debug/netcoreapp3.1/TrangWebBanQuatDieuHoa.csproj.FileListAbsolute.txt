@@ -450,13 +450,6 @@ C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuH
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Brand\Index3.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Order\Danhsachtinhthanh.cshtml.g.cs
-C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\System.Web.Mvc.dll
-C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\System.Web.Razor.dll
-C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\System.Web.Helpers.dll
-C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\System.Web.WebPages.Deployment.dll
-C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\System.Web.WebPages.Razor.dll
-C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\System.Web.WebPages.dll
-C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\Microsoft.Web.Infrastructure.dll
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\X.PagedList.dll
