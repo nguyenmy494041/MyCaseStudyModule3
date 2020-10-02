@@ -3,39 +3,42 @@
     ViewBag.Title = "Quản lý thành viên";
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
-<a asp-controller="UsersManager" asp-action="Create" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Thêm thành viên</a>
-<table class="table table-hover table-responsive table-bordered display w-100 d-block d-md-table" id="usersTable">
-    <thead>
-        <tr class="thead-dark">
-            <th>Tên thành viên</th>
-            <th>Ảnh đại diện</th>
-            <th>Email</th>
-            <th>Vai trò</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
+<div class=" col-11 container">
+    <br />
+    <a asp-controller="UsersManager" asp-action="Create" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Thêm thành viên</a>
+    <table class="table table-hover table-responsive table-bordered display w-100 d-block d-md-table" id="usersTable">
+        <thead>
+            <tr class="thead-dark">
+                <th>Tên thành viên</th>
+                <th>Ảnh đại diện</th>
+                <th>Email</th>
+                <th>Vai trò</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
         {
             @foreach (var user in Model)
             {
-                <tr>
-                    <td>@user.Name</td>
-                    <td>
-                        <img src="@(!string.IsNullOrEmpty(user.ProfilePicture) ? $"/images/{user.ProfilePicture}" : "/images/avatar.jpg")" height="50" />
-                    </td>
-                    <td>@user.Email</td>
-                    <td>@user.RoleName</td>
-                    <td>
-                        <a asp-controller="UsersManager" asp-action="Edit" asp-route-id="@user.UserId" title="Chỉnh sửa">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <td>@user.Name</td>
+                <td>
+                    <img src="@(!string.IsNullOrEmpty(user.ProfilePicture) ? $"/images/users/{user.ProfilePicture}" : "/images/ImagesProduct/avatar.jpg")" height="50" />
+                </td>
+                <td>@user.Email</td>
+                <td>@user.RoleName</td>
+                <td>
+                    <a asp-controller="UsersManager" asp-action="Edit" asp-route-id="@user.UserId" title="Chỉnh sửa">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
             }
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 @section scripts{
     <environment include="Development">
@@ -46,7 +49,22 @@
     </environment>
     <script>
         $(document).ready(function() {
-            $('#usersTable').DataTable();
+            $('#usersTable').DataTable(
+                {
+                    "columnDefs": [
+                        {
+                            "targets": 3,
+                            "orderable": false,
+                            "searchable": false
+                        },
+                        {
+                            "targets": 4,
+                            "orderable": false,
+                            "searchable": false
+                        },
+                    ]
+                }
+            );
         });
     </script>
 }

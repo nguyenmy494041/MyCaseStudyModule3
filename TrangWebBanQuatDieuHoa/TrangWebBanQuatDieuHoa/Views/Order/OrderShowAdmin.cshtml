@@ -4,95 +4,116 @@
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
-<br />
-<h3 class=" text-center text-danger">Danh sách các đơn hàng</h3>
-<br />
-<table id="dataTable" class=" table table-bordered table-hover mt-3">
-    <thead class=" thead-light">
-        <tr>
+<div class=" col-11 container bg-light">
+    <br />
+    <h3 class=" text-center text-danger">Danh sách các đơn đặt hàng</h3>
+    <br />
+    <table id="dataTable" class=" table table-bordered table-hover mt-3">
+        <thead class=" thead-light">
+            <tr>
 
-            <th>Mã Đơn hàng</th>
-            <th>Tên khách hàng </th>
-            <th>Số điện thoại </th>
-            <th>Tên sản phẩm </th>
-            <th>Số lượng </th>
-            <th>Trạng thái </th>
-            <th>Xem chi tiết</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+                <th>Mã Đơn hàng</th>
+                <th>Tên khách hàng </th>
+                <th>Số điện thoại </th>
+                <th>Tên sản phẩm </th>
+                <th>Số lượng </th>
+                <th>Trạng thái </th>
+                <th>Xem chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
 
-        {
-        <tr>
+            {
+                <tr>
 
-            <td>@item.OrderId</td>
-            <td>@item.Fullname </td>
-            <td>
-                @item.SoDienThoai
-            </td>
-            <td>@item.ProductName </td>
-            <td>@item.Soluong </td>
-            <td>
-                @item.State.StateName
-            </td>
+                    <td>@item.OrderId</td>
+                    <td>@item.Fullname </td>
+                    <td>
+                        @item.SoDienThoai
+                    </td>
+                    <td>@item.ProductName </td>
+                    <td>@item.Soluong </td>
+                    <td>
+                        @item.State.StateName
+                    </td>
 
 
-            <td>
-                <div class=" row">
-                    <a style="margin:2px 2px" asp-controller="Order" asp-action="XemChiTietDonHang" asp-route-id="@item.OrderId" class=" btn btn-outline-success">Chi tiết</a>
-                    <button style="margin:2px 2px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal-@item.OrderId">
-                        Xác nhận
-                    </button>
-                    <button style="margin:2px 2px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#my-@item.OrderId">
-                        Hủy đơn
-                    </button>
-                </div>
-                <div class="modal" id="myModal-@item.OrderId">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header ">
-                                <h2 class="modal-title" style="margin: auto;color: red">Xác nhận đơn hàng</h2>
-                            </div>
-                            <div class="modal-body">
-                                <h6> Bạn chắc chắn đơn hàng này đã được xác nhận ?</h6>
-                            </div>
-                            <div class="modal-footer">
-                                <a asp-controller="Order" asp-action="XacNhanGiaoHang" asp-route-id="@item.OrderId" class="btn btn-danger">Đồng ý</a>
-                                <button type="button" class="btn btn-info" data-dismiss="modal">Không</button>
+                    <td>
+                        <div class=" row">
+                            <a style="margin:2px 5px; width:85px" asp-controller="Order" asp-action="XemChiTietDonHang" asp-route-id="@item.OrderId" class=" btn btn-outline-success">Chi tiết</a>
+                            <button style="margin:2px 5px; width:90px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal-@item.OrderId">
+                                Xác nhận
+                            </button>
+                            <button style="margin:2px 5px; width:85px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#my-@item.OrderId">
+                                Hủy đơn
+                            </button>
+                        </div>
+                        <div class="modal" id="myModal-@item.OrderId">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header ">
+                                        <h2 class="modal-title" style="margin: auto;color: red">Xác nhận đơn hàng</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6> Bạn chắc chắn đơn hàng này đã được xác nhận ?</h6>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a asp-controller="Order" asp-action="XacNhanGiaoHang" asp-route-id="@item.OrderId" class="btn btn-danger">Đồng ý</a>
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">Không</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="modal" id="my-@item.OrderId">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header ">
-                                <h2 class="modal-title" style="margin: auto;color: red">Hủy đơn</h2>
-                            </div>
-                            <div class="modal-body">
-                                <h6> Bạn chắc chắn muốn hủy đơn hàng này?</h6>
-                            </div>
-                            <div class="modal-footer">
-                                <a asp-controller="Order" asp-action="AdminHuyDonHang" asp-route-id="@item.OrderId" class="btn btn-danger">Có</a>
-                                <button type="button" class="btn btn-info" data-dismiss="modal">Không</button>
+                        <div class="modal" id="my-@item.OrderId">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header ">
+                                        <h2 class="modal-title" style="margin: auto;color: red">Hủy đơn</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6> Bạn chắc chắn muốn hủy đơn hàng này?</h6>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a asp-controller="Order" asp-action="AdminHuyDonHang" asp-route-id="@item.OrderId" class="btn btn-danger">Có</a>
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">Không</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </td>
+                    </td>
 
-        </tr>
+                </tr>
 
-        }
+            }
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             $('#dataTable').dataTable(
+                {
+                    "columnDefs": [
+                        {
+                            "targets": 5,
+                            "orderable": false,
+                            "searchable": false
+                        },
+                        {
+                            "targets": 6,
+                            "orderable": false,
+                            "searchable": false
+                        },
+                        {
+                            "targets": 2,
+                            "orderable": false,
+                           
+                        },
+                    ]
+                }
             );
         });
     </script>

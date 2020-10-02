@@ -130,7 +130,7 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                 if (createProduct.ImageFiles != null)
                 {
                     var iamge = createProduct.ImageFiles.ToList();
-                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images","ImagesProduct");
 
                     for (int i = 0; i < iamge.Count; i++)
                     {
@@ -147,9 +147,19 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                         };
                         images.Add(anh);
 
-                    }
-                    product.Images = images;
+                    }                   
                 }
+                else
+                {
+                    var no_anh = new Image()
+                    {
+                        ProductId = createProduct.ProductId,
+                        ImageName = "no-product-image-570x456.png"
+                    };
+                    images.Add(no_anh);
+                    
+                }
+                product.Images = images;
                 product.Specification = spec;
                 context.Products.Add(product);
                 return context.SaveChanges();
@@ -161,7 +171,7 @@ namespace TrangWebBanQuatDieuHoa.Repositories
         {
             var exit = context.Products.Include(e => e.Specification)
               .Include(e => e.Images).Include(e => e.Category).FirstOrDefault(e => e.ProductId == editproduct.ProductId);
-            //var exit = context.Products.Find(editproduct.ProductId);
+            
             if (exit != null)
             {
                 exit.ProductName = editproduct.ProductName;
@@ -172,12 +182,10 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                 exit.TankCapacity = editproduct.TankCapacity;
                 exit.Utilities = editproduct.Utilities;
                 exit.Manufactures = editproduct.Manufactures;
-                exit.MadeIn = editproduct.MadeIn;
-                //exit.CategoryId = editproduct.CategoryId;
-                //exit.BrandId = editproduct.BrandId;
+                exit.MadeIn = editproduct.MadeIn;                
                 exit.Year = editproduct.Year;
                 exit.Description = editproduct.Description;
-                //var spec = context.Specifications.FirstOrDefault(p => p.ProductId == exit.ProductId);
+                
                 var spec = new Specification()
                 {
                 Dynamic = editproduct.Dynamic,
@@ -206,12 +214,15 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                 List<Image> images = new List<Image>();
                 if (editproduct.ImageFiles != null)
                 {
-                    //List<Image> imagesList = context.Images.ToList().FindAll(el => el.ProductId == exit.ProductId);
-                    //context.RemoveRange(imagesList);
-                    //context.SaveChangesAsync();
+                    for (int i = 0; i < exit.Images.Count; i++)
+                    {
+                        string delFile = Path.Combine(webHostEnvironment.WebRootPath
+                                            , "images", "ImagesProduct", exit.Images.ToList()[i].ImageName);
+                        System.IO.File.Delete(delFile);
+                    }
 
                     var iamge = editproduct.ImageFiles.ToList();
-                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images","ImagesProduct");
 
                     for (int i = 0; i < iamge.Count; i++)
                     {

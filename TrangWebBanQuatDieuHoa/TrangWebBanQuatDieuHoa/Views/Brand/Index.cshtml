@@ -8,7 +8,7 @@
 <br />
 <h4 class=" text-center">Danh sách các thương hiệu sản phẩm</h4>
 <br />
-<div class=" col-11 container bg-light">
+<div class=" col-10 container">
     <a asp-controller="Brand" asp-action="Create" class=" btn btn-info">Thêm mới</a>
     <br /><br />
     <table id="dataTable" class=" table table-bordered table-hover mt-3">
@@ -28,30 +28,8 @@
                     <td>@item.BrandId</td>
                     <td>@item.BrandName</td>
                     <td>
-                        <a asp-controller="Brand" asp-action="Edit" asp-route-id="@item.BrandId"><i class="fa fa-edit"></i></a>
-                        <a href="javascript:void(0)" class="text-danger" onclick="brand.delete('@item.BrandId')"><i class="fa fa-trash"></i></a>
-                        @*<a asp-controller="Brand" asp-action="Edit" asp-route-id="@item.BrandId"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#Brand-@item.BrandId">
-                                Delete
-                            </button>
-                            <div class="modal" id="Brand-@item.BrandId">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header ">
-                                            <h2 class="modal-title" style="margin: auto;color: red">Xóa thương hiệu</h2>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h6> Are you sure you want to delete Role "@item.BrandName" ?</h6>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a asp-controller="Brand" asp-action="Delete" asp-route-id="@item.BrandId" class="btn btn-danger">Yes</a>
-                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </td>*@
-
+                        <a data-toggle="tooltip" title="Sửa" style="margin:0px 5px" asp-controller="Brand" asp-action="Edit" asp-route-id="@item.BrandId"><i class="fa fa-edit"></i></a>
+                        <a data-toggle="tooltip" title="Xóa" style="margin:0px 5px" href="javascript:void(0)" class="text-danger" onclick="brand.delete('@item.BrandId')"><i class="fa fa-trash"></i></a>                      
                 </tr>
 
 
@@ -64,15 +42,14 @@
     <script>
         $(document).ready(function () {
             $('#dataTable').dataTable(
-                //{
-                //    "columnDefs": [
-                //        {
-                //            "targets": 0,
-                //            "orderable": false
-                //        },
-
-                //    ]
-                //}
+                {
+                    "columnDefs": [
+                        {
+                            "targets": 2,
+                            "orderable": false
+                        },
+                    ]
+                }
             );
         });
     </script>

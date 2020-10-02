@@ -3,26 +3,28 @@
     ViewBag.Title = "Thêm mới vai trò trên trang";
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
-<form asp-controller="RolesManager" asp-action="Create" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="row form-group">
-        <div class="col-md-3">
-            <label asp-for="Name">Tên vai trò: </label>
+<div class=" col-10 container"><br />
+    <form asp-controller="RolesManager" asp-action="Create" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div><br />
+        <div class="row form-group">
+            <div class="col-md-3">
+                <label asp-for="Name">Tên vai trò: </label>
+            </div>
+            <div class="col-md-9">
+                <input asp-for="Name" class="form-control" placeholder="Nhập tên vai trò">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
         </div>
-        <div class="col-md-9">
-            <input asp-for="Name" class="form-control" placeholder="Nhập tên vai trò">
-            <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="row form-group">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-9">
+                <button type="submit" class="btn btn-primary">Lưu</button>
+                <a asp-controller="RolesManager" asp-action="Index" class="btn btn-secondary mx-3">Huỷ</a>
+            </div>
         </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-9">
-            <button type="submit" class="btn btn-primary">Lưu</button>
-            <a asp-controller="RolesManager" asp-action="Index" class="btn btn-secondary mx-3">Huỷ</a>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
 
 @section scripts
 {

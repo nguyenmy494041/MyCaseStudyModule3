@@ -2,76 +2,57 @@
 @{
     ViewData["Title"] = "ShowFilter";
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
 
-<br />
-<h3 class=" text-center text-danger">Danh sách các sản phẩm bình nóng lạnh</h3>
-<br />
-<table id="dataTable" class=" table table-bordered table-hover mt-3">
-    <thead class=" thead-light">
-        <tr>
-            <th>STT</th>
-            <th>Mã sản phẩm</th>
-            <th>Tên sản phẩm </th>
-            <th>Giá sản phẩm</th>
-            <th>Công suất</th>
-            <th>Hình sản phẩm </th>
-            <th>Thao tác </th>
-
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var item in Model)
-        {
-
+<div class=" col-11 container bg-light">
+    <br />
+    <h3 class=" text-center text-danger">Danh sách các sản phẩm bình nóng lạnh</h3>
+    <br />
+    <table id="dataTable" class=" table table-bordered table-hover mt-3">
+        <thead class=" thead-light">
             <tr>
-                <td>@item.ProductId</td>
-                <td>@item.ProductCode</td>
-                <td>@item.ProductName</td>
-                <td>@item.ProductPrice</td>
-                <td>@item.Wattage W</td>
-                <td>
-                    @if (item.Images == null || item.Images.Count == 0)
-                    {
-                        <div> Chưa có hình sản phẩm</div>
-                    }
-                    else
-                    {
-                <img width="100" src="~/images/@item.Images.ToList()[0].ImageName" />
-                    }
-                </td>
-                <td>
-                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fa fa-edit"></i></a>
-                    <a href="javascript:void(0)" class="text-danger" onclick="bottle.delete('@item.ProductId')"><i class="fa fa-trash"></i></a>
-                    @*<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#gia-@item.ProductPrice">
-                            Delete
-                        </button>
-                        <div class="modal" id="gia-@item.ProductPrice">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header ">
-                                        <h2 class="modal-title" style="margin: auto;color: red">Xóa thương hiệu</h2>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h6> Are you sure you want to delete Role "@item.ProductName" ?</h6>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-danger">Yes</a>
-                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>*@
-                </td>
+                <th>STT</th>
+                <th>Mã sản phẩm</th>
+                <th>Tên sản phẩm </th>
+                <th>Giá sản phẩm</th>
+                <th>Công suất</th>
+                <th>Hình sản phẩm </th>
+                <th>Thao tác </th>
 
             </tr>
+        </thead>
+        <tbody>
 
+            @foreach (var item in Model)
+            {
 
-        }
+                <tr>
+                    <td>@item.ProductId</td>
+                    <td>@item.ProductCode</td>
+                    <td>@item.ProductName</td>
+                    <td> @String.Format(info, "{0:#,##0 đ}", item.ProductPrice)</td>
+                    <td>@item.Wattage W</td>
+                    <td>
+                        @if (item.Images == null || item.Images.Count == 0)
+                        {
+                            <div> Chưa có hình sản phẩm</div>
+                        }
+                        else
+                        {
+                            <img width="100" src="~/images/ImagesProduct/@item.Images.ToList()[0].ImageName" />
+                        }
+                    </td>
+                    <td>
+                        <a data-toggle="tooltip" title="Sửa" style="margin:0px 5px" asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fa fa-edit"></i></a>
+                        <a data-toggle="tooltip" title="Xóa" style="margin:0px 5px" href="javascript:void(0)" class="text-danger" onclick="bottle.delete('@item.ProductId')"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     <script>
@@ -80,10 +61,15 @@
                 {
                     "columnDefs": [
                         {
-                            "targets": 7,
-                            "orderable": false
+                            "targets": 5,
+                            "orderable": false,
+                            "searchable": false
                         },
-
+                        {
+                            "targets": 6,
+                            "orderable": false,
+                            "searchable": false
+                        },
                     ]
                 }
             );

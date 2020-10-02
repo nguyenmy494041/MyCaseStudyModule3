@@ -3,31 +3,33 @@
     ViewBag.Title = "Vai trò trên trang";
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
-<a asp-controller="RolesManager" asp-action="Create" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Thêm vai trò</a>
-<table class="table table-hover table-responsive table-bordered display w-100 d-block d-md-table" id="rolesTable">
-    <thead>
-        <tr class="thead-dark">
-            <th>Tên vai trò</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
-        {
-            @foreach (var role in Model)
+<div class="col-11 container"><br />
+    <a asp-controller="RolesManager" asp-action="Create" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Thêm vai trò</a>
+    <table class="table table-hover table-responsive table-bordered display w-100 d-block d-md-table" id="rolesTable">
+        <thead>
+            <tr class="thead-dark">
+                <th>Tên vai trò</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
             {
-                <tr>
-                    <td>@role.Name</td>
-                    <td>
-                        <a asp-controller="RolesManager" asp-action="Edit" asp-route-id="@role.RoleId" title="Chỉnh sửa">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                    </td>
-                </tr>
+                @foreach (var role in Model)
+                {
+                    <tr>
+                        <td>@role.Name</td>
+                        <td>
+                            <a asp-controller="RolesManager" asp-action="Edit" asp-route-id="@role.RoleId" title="Chỉnh sửa">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 @section Scripts{
     <environment include="Development">

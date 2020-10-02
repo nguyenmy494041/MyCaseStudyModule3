@@ -5,23 +5,25 @@
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
 
-<form asp-controller="Brand" asp-action="Create" method="post" class=" bg-light rounded container">
-    <h3>Thêm mới thương hiệu sản phẩm</h3>
-    <div class=" row form-group col">
-        <div style="width: 22.5%">
-            <label asp-for="BrandName"></label>
+<div class=" col-8 container">
+    <form asp-controller="Brand" asp-action="Create" method="post" class=" bg-light rounded container">
+        <br />
+        <h3 class=" text-danger text-center">Thêm mới thương hiệu sản phẩm</h3><br />
+        <div class=" row form-group col">
+            <div class=" col-2">
+                <label asp-for="BrandName"></label>
+            </div>
+            <div class=" col-10">
+                <input asp-for=" BrandName" class=" form-control" />
+                <span asp-validation-for=" BrandName" class=" text-danger"></span>
+                <h3>@ViewData["Message"]</h3>
+
+            </div>
         </div>
-        <div class=" col-4">
-            <input asp-for=" BrandName" class=" form-control" />
-            <span asp-validation-for=" BrandName" class=" text-danger"></span>
-            <h3>@ViewData["Message"]</h3>
 
+        <div class="row float-right">
+            <button style="margin:0px,4px;" class="btn btn-info" type="submit">Thêm mới</button>&nbsp;&nbsp;
+            <a class=" btn btn-primary" style="margin:0px,4px;" asp-controller="Brand" asp-action="Index">Hủy</a>
         </div>
-    </div>
-
-    <div class="d-flex justify-content-center row">
-        <button style="margin:0px,4px;" class="btn btn-info" type="submit">Thêm mới</button>&nbsp;&nbsp;
-
-        <a class=" btn btn-primary" style="margin:0px,4px;" asp-controller="Brand" asp-action="Index">Hủy</a>
-    </div>
-</form>
+    </form>
+</div>

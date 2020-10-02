@@ -1,4 +1,6 @@
-﻿var fan = fan || {};
+﻿
+
+var fan = fan || {};
 fan.delete = function (id) {
     bootbox.confirm({
         title: "Cảnh báo",
@@ -27,3 +29,5 @@ fan.delete = function (id) {
         }
     });
 }
+
+

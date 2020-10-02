@@ -25,22 +25,29 @@
     <div class=" col-sm-5 ">
         <div id="carouselExampleInterval" class="carousel slide my-2 border border-secondary rounded bg-light" data-ride="carousel">
             <div class="carousel-inner">
-
-                @for (int i = 0; i < result.Count; i++)
-                {
-                    @if (i == 0)
+                @{ if (result.Count == 0)
                     {
-                        <div class="carousel-item active my-2 " data-interval="@(10000*(result.Count - i))">
-                            <img src="~/images/@result[i].ImageName" class="d-block w-100" alt="text">
-                        </div>
+                        <img src="~/images/anh/no-product-image-570x456.png" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
                     }
                     else
                     {
-                        <div class="carousel-item my-2" data-interval="@(10000*(result.Count - i))">
-                            <img src="~/images/@result[i].ImageName" class="d-block w-100" alt="text">
-                        </div>
-                    }
+                        for (int i = 0; i < result.Count; i++)
+                        {
+                            @if (i == 0)
+                            {
+                                <div class="carousel-item active my-2 " data-interval="@(10000*(result.Count - i))">
+                                    <img src="~/images/ImagesProduct/@result[i].ImageName" class="d-block w-100" alt="text">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="carousel-item my-2" data-interval="@(10000*(result.Count - i))">
+                                    <img src="~/images/ImagesProduct/@result[i].ImageName" class="d-block w-100" alt="text">
+                                </div>
+                            }
 
+                        }
+                    }
                 }
 
             </div>
@@ -243,29 +250,19 @@
     <div class=" row">
         @for (int i = 0; i < lengthsp; i++)
         {
-            @*<div class=" col-sm-3">
 
-                <div class=" card my-3 text-center">
-                    <a asp-controller="Home" asp-action="Detail" asp-route-id="@listsanpham[i].ProductId">
-                        <div class=" card">
-                            <div class=" card-header">
-                                <h6>@listsanpham[i].ProductName</h6>
-                            </div>
-                            <img src="@Url.Content("~/images/"+ listsanpham[i].Images.First().ImageName)" class="card-img-top" alt="Alternate Text" height="225" asp-append-version="true" />
-                            <div class=" card-footer">
-                                <h5 style="color: red"> @listsanpham[i].ProductPrice </h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>*@
             <div class="col-md-4 col-lg-3 col-sm-6 col-xl-2 col-6 card-group">
                 <div class="card rounded my-3 bg-transparent py-2">
                     <a asp-controller="Home" asp-action="Detail" asp-route-id="@listsanpham[i].ProductId">
-                        @{
+                        @{if (listsanpham[i].Images.Count == 0)
+                            {
+                                <img src="~/images/anh/no-product-image-570x456.png" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
+                            }
+                            else
+                            {
 
-                            <img src="@Url.Content("~/images/"+ listsanpham[i].Images.First().ImageName)" alt="@listsanpham[i].ProductName" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
-
+                                <img src="@Url.Content("~/images/ImagesProduct/" + listsanpham[i].Images.First().ImageName)" alt="@listsanpham[i].ProductName" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
+                            }
                         }
                     </a>
                     <h6 class="card-body">
@@ -292,22 +289,22 @@
     <div class="col-10">
         <h3 class="my-2 text-danger">Đặc điểm nổi bật của sản phẩm</h3><br />
         <div class="motasanpham" id="motachitietsanpham">
-            @Html.Raw(Model.Description.Replace("\r\n", "<br />"))           
+            @Html.Raw(Model.Description.Replace("\r\n", "<br />"))
         </div>
     </div>
     @*<div class=" col-3">
-        <ul class="list-group">
-            <li class="list-group-item active">Thông tin sản phẩm</li>
-            <li class="list-group-item"> <b>Công suất</b>: @Model.Wattage W</li>
-            <li class="list-group-item"><b>Chức năng</b>: @Model.Specification.Dynamic</li>
-            <li class="list-group-item"><b>Điều khiển</b>: @Model.Specification.Control</li>
-            <li class="list-group-item"><b>Phạm vi làm mát</b>: @Model.Specification.CollingRange</li>
-            <li class="list-group-item"><b>Độ ồn</b>: @Model.Specification.Noiselevel</li>
-            <li class="list-group-item"><b>Tiện ích</b>: @Model.Utilities</li>
-            <li class="list-group-item"><b>Sản xuất tại</b>: @Model.MadeIn</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-    </div>*@
+            <ul class="list-group">
+                <li class="list-group-item active">Thông tin sản phẩm</li>
+                <li class="list-group-item"> <b>Công suất</b>: @Model.Wattage W</li>
+                <li class="list-group-item"><b>Chức năng</b>: @Model.Specification.Dynamic</li>
+                <li class="list-group-item"><b>Điều khiển</b>: @Model.Specification.Control</li>
+                <li class="list-group-item"><b>Phạm vi làm mát</b>: @Model.Specification.CollingRange</li>
+                <li class="list-group-item"><b>Độ ồn</b>: @Model.Specification.Noiselevel</li>
+                <li class="list-group-item"><b>Tiện ích</b>: @Model.Utilities</li>
+                <li class="list-group-item"><b>Sản xuất tại</b>: @Model.MadeIn</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+        </div>*@
 
 
 </div>

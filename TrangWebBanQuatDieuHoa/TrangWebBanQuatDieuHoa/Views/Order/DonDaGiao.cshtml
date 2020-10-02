@@ -4,56 +4,72 @@
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
-<br />
-<h3 class=" text-center text-danger">Danh sách các đơn hàng</h3>
-<br />
-<table id="dataTable" class=" table table-bordered table-hover mt-3">
-    <thead class=" thead-light">
-        <tr>
-
-            <th>Mã Đơn hàng</th>
-            <th>Tên khách hàng </th>
-            <th>Số điện thoại </th>
-            <th>Tên sản phẩm </th>
-            <th>Số lượng </th>
-            <th>Trạng thái </th>
-            <th>Xem chi tiết</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-
-        {
+<div class=" col-11 container bg-light">
+    <br />
+    <h3 class=" text-center text-danger">Danh sách các đơn hàng đã giao</h3>
+    <br />
+    <table id="dataTable" class=" table table-bordered table-hover mt-3">
+        <thead class=" thead-light">
             <tr>
 
-                <td>@item.OrderId</td>
-                <td>@item.Fullname </td>
-                <td>
-                    @item.SoDienThoai
-                </td>
-                <td>@item.ProductName </td>
-                <td>@item.Soluong </td>
-                <td>
-                    @item.State.StateName
-                </td>
-
-
-                <td>
-                    <a asp-controller="Order" asp-action="XemChiTietDonHang" asp-route-id="@item.OrderId" class=" btn btn-danger">Chi tiết</a>
-                   
-                </td>
-
+                <th>Mã Đơn hàng</th>
+                <th>Tên khách hàng </th>
+                <th>Số điện thoại </th>
+                <th>Tên sản phẩm </th>
+                <th>Số lượng </th>
+                <th>Trạng thái </th>
+                <th>Xem chi tiết</th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
 
-        }
+            {
+                <tr>
+                    <td>@item.OrderId</td>
+                    <td>@item.Fullname </td>
+                    <td>
+                        @item.SoDienThoai
+                    </td>
+                    <td>@item.ProductName </td>
+                    <td>@item.Soluong </td>
+                    <td>
+                        @item.State.StateName
+                    </td>
+                    <td>
+                        <a asp-controller="Order" asp-action="XemChiTietDonHang" asp-route-id="@item.OrderId" class=" btn btn-danger">Chi tiết</a>
+                    </td>
+                </tr>
 
-    </tbody>
-</table>
+            }
+
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             $('#dataTable').dataTable(
+                {
+                    "columnDefs": [
+                        {
+                            "targets": 5,
+                            "orderable": false,
+                            "searchable": false
+                        },
+                        {
+                            "targets": 6,
+                            "orderable": false,
+                            "searchable": false
+                        },
+                        {
+                            "targets": 2,
+                            "orderable": false,
+
+                        },
+                    ]
+                }
             );
         });
     </script>

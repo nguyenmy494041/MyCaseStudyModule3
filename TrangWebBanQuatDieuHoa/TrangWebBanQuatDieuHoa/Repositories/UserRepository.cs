@@ -75,7 +75,7 @@ namespace TrangWebBanQuatDieuHoa.Repositories
             };
             if (model.ImageFile != null)
             {
-                var uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                var uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/users");
                 var fileName = $"{Guid.NewGuid()}{Path.GetExtension(model.ImageFile.FileName)}";
                 var filePath = Path.Combine(uploadFolder, fileName);
                 using var fs = new FileStream(filePath, FileMode.Create);

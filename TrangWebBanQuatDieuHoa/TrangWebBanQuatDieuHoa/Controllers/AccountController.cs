@@ -43,7 +43,7 @@ namespace TrangWebBanQuatDieuHoa.Controllers
                 if (result.Succeeded)
                 {
 
-                    return RedirectToAction("Show", "Home");
+                    return RedirectToAction("Index", "Brand");
                 }
                 else
                 {

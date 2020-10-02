@@ -378,7 +378,6 @@ C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuH
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Category\Index.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Category\Edit.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Product\Create.cshtml.g.cs
-C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Brand\Index2.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Product\ShowFan.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Shared\LayoutAdmin.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
@@ -448,7 +447,6 @@ C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuH
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Account\Index.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
-C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Brand\Index3.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Order\Danhsachtinhthanh.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
