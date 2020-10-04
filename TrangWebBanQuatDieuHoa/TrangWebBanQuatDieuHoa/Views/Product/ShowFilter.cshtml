@@ -40,7 +40,7 @@
                         }
                         else
                         {
-                            <img width="100" src="~/images/ImagesProduct/@item.Images.ToList()[0].ImageName" />
+                            <img width="100" src="~/images/@item.Images.ToList()[0].ImageName" />
                         }
                     </td>
                     <td>
@@ -52,9 +52,7 @@
         </tbody>
     </table>
 </div>
-@*<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-    Tooltip on top
-</button>*@
+
 @section Scripts {
     <script>
         $(document).ready(function () {

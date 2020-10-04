@@ -130,7 +130,7 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                 if (createProduct.ImageFiles != null)
                 {
                     var iamge = createProduct.ImageFiles.ToList();
-                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images","ImagesProduct");
+                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
 
                     for (int i = 0; i < iamge.Count; i++)
                     {
@@ -217,12 +217,12 @@ namespace TrangWebBanQuatDieuHoa.Repositories
                     for (int i = 0; i < exit.Images.Count; i++)
                     {
                         string delFile = Path.Combine(webHostEnvironment.WebRootPath
-                                            , "images", "ImagesProduct", exit.Images.ToList()[i].ImageName);
+                                            , "images", exit.Images.ToList()[i].ImageName);
                         System.IO.File.Delete(delFile);
                     }
 
                     var iamge = editproduct.ImageFiles.ToList();
-                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images","ImagesProduct");
+                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
 
                     for (int i = 0; i < iamge.Count; i++)
                     {

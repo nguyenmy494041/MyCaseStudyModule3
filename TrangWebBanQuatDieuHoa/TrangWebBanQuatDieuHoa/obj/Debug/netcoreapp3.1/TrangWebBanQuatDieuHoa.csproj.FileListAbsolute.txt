@@ -447,7 +447,6 @@ C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuH
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Account\Index.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
-C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\obj\Debug\netcoreapp3.1\Razor\Views\Order\Danhsachtinhthanh.cshtml.g.cs
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\DataPersonal\Codegym\MyProjectMudule3\MyCaseStudyModule3\TrangWebBanQuatDieuHoa\TrangWebBanQuatDieuHoa\bin\Debug\netcoreapp3.1\X.PagedList.dll

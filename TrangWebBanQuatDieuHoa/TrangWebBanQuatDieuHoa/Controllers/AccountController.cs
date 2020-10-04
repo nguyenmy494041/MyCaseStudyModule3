@@ -57,7 +57,7 @@ namespace TrangWebBanQuatDieuHoa.Controllers
         {
             return View();
         }
-        //[AllowAnonymous]
+      
         [HttpPost]
         public async Task<IActionResult> Register(AccountRegisterViewModel model)
         {

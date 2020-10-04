@@ -36,13 +36,13 @@
                             @if (i == 0)
                             {
                                 <div class="carousel-item active my-2 " data-interval="@(10000*(result.Count - i))">
-                                    <img src="~/images/ImagesProduct/@result[i].ImageName" class="d-block w-100" alt="text">
+                                    <img src="~/images/@result[i].ImageName" class="d-block w-100" alt="text">
                                 </div>
                             }
                             else
                             {
                                 <div class="carousel-item my-2" data-interval="@(10000*(result.Count - i))">
-                                    <img src="~/images/ImagesProduct/@result[i].ImageName" class="d-block w-100" alt="text">
+                                    <img src="~/images/@result[i].ImageName" class="d-block w-100" alt="text">
                                 </div>
                             }
 
@@ -68,8 +68,7 @@
 
 
     </div>
-
-    @*<div class=" col-sm-1"></div>*@
+      
     <div class=" col-sm-4" style="line-height: 12px">
         <div class=" bg-light mt-3 container">
             <p class=" mt-3">
@@ -240,10 +239,6 @@
     </div>
 </div>
 
-
-@*các sản phẩm tương tự*@
-
-
 <div>
     <hr />
     <h3>Các sản phẩm tương tự</h3>
@@ -261,7 +256,7 @@
                             else
                             {
 
-                                <img src="@Url.Content("~/images/ImagesProduct/" + listsanpham[i].Images.First().ImageName)" alt="@listsanpham[i].ProductName" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
+                                <img src="@Url.Content("~/images/" + listsanpham[i].Images.First().ImageName)" alt="@listsanpham[i].ProductName" style="height: 150px; max-width: 90%;" class="mx-auto d-block">
                             }
                         }
                     </a>
@@ -280,7 +275,6 @@
     <hr />
 </div>
 
-@*thông tin chi tiết sản phẩm*@
 
 <div class="mt-2 row">
     <div class=" col-1">
@@ -291,20 +285,7 @@
         <div class="motasanpham" id="motachitietsanpham">
             @Html.Raw(Model.Description.Replace("\r\n", "<br />"))
         </div>
-    </div>
-    @*<div class=" col-3">
-            <ul class="list-group">
-                <li class="list-group-item active">Thông tin sản phẩm</li>
-                <li class="list-group-item"> <b>Công suất</b>: @Model.Wattage W</li>
-                <li class="list-group-item"><b>Chức năng</b>: @Model.Specification.Dynamic</li>
-                <li class="list-group-item"><b>Điều khiển</b>: @Model.Specification.Control</li>
-                <li class="list-group-item"><b>Phạm vi làm mát</b>: @Model.Specification.CollingRange</li>
-                <li class="list-group-item"><b>Độ ồn</b>: @Model.Specification.Noiselevel</li>
-                <li class="list-group-item"><b>Tiện ích</b>: @Model.Utilities</li>
-                <li class="list-group-item"><b>Sản xuất tại</b>: @Model.MadeIn</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
-        </div>*@
+    </div> 
 
 
 </div>
